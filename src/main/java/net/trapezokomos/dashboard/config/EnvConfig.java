@@ -15,5 +15,7 @@ public class EnvConfig {
         System.setProperty("POSTGRES_USER", postgresUser);
         System.setProperty("POSTGRES_PASSWORD", postgresPassword);
         System.setProperty("POSTGRES_DB", postgresDb);
+
+        System.out.println("SPRING_DATASOURCE_URL: " + springDatasourceUrl);
     }
 }
