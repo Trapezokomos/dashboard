@@ -58,3 +58,22 @@ Build and start the Docker containers using Docker Compose:
 ```sh
 docker-compose up --build
 ```
+## Development
+
+### Swagger
+You can access Swagger to test the endpoints
+```sh
+http://localhost:8080/swagger-ui/index.html
+```
+
+### Prometheus
+You can access Prometheus to monitor the app (Username/Password= admin/admin) 
+```sh
+http://localhost:9090
+````
+
+### Grafana
+You can access Grafana
+```sh
+http://localhost:3000
+````
