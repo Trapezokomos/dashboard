@@ -11,6 +11,8 @@ COPY . /app
 
 COPY .env /app/.env
 
+COPY prometheus/prometheus.yml /app/prometheus.yml
+
 # Expose the port that your application runs on
 EXPOSE 8080
 
