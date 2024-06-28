@@ -9,8 +9,6 @@ COPY build/libs/*.jar app.jar
 
 COPY . /app
 
-COPY .env /app/.env
-
 COPY prometheus/prometheus.yml /app/prometheus.yml
 
 # Expose the port that your application runs on

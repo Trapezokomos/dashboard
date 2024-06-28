@@ -31,16 +31,17 @@ git clone https://github.com/Trapezokomos/dashboard.git
 cd dashboard
 ```
 
-### Step 2: Set up environment variables
+### Step 2: Set up environment variables on configuration of IntelliJ IDEA
 
-Create a `.env` file in the root directory of the project with the following structure based on the `.env.example`:
+Create or edit the configuration
+1. Click modify options and select environment variables
+2. Add the following environment variables:
 
 ```plaintext
-# .env file
-POSTGRES_DB=your_db_name
-POSTGRES_USER=your_db_user
-POSTGRES_PASSWORD=your_db_password
-SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/your_db_name
+POSTGRES_DB_USER=postgres_username
+POSTGRES_DB_PASSWORD=postgres_password
+POSTGRES_DB_NAME=postgres
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/postgres
 ```
 
 ### Step 3: Build the application
@@ -56,6 +57,7 @@ Use Gradle to build the application:
 Build and start the Docker containers using Docker Compose:
 
 ```sh
+docker build -t dashboard-app-image .
 docker-compose up --build
 ```
 ## Development

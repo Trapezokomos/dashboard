@@ -1,0 +1,133 @@
+@startuml
+
+entity User {
+    +id : int
+    +username : string
+    +password : string
+    +email : string
+    +first_name : string
+    +last_name : string
+    +phone_number : string
+    +authorities : string
+    +customer_id : int
+}
+
+entity Customer {
+    +id : int
+    +name : string
+    +phone_number : string
+}
+
+entity Store {
+    +id : int
+    +customer_id : int
+    +name : string
+    +address : string
+    +description : string
+    +slottimeavailabilityblock : string
+}
+
+entity StoreDayHour {
+    +id : int
+    +store_id : int
+    +dayofweek : string
+    +start_time : string
+    +end_time : string
+    +closed : boolean
+}
+
+entity Image {
+    +id : int
+    +store_id : int
+    +name : string
+    +type : string
+    +byte : byte
+    +srclink : string
+}
+
+entity Attribute {
+    +id : int
+    +store_id : int
+    +name : string
+    +value : string
+    +type : string
+}
+
+entity BillingDetails {
+    +id : int
+    +store_id : int
+    // Other attributes
+}
+
+entity Menu {
+    +id : int
+    +store_id : int
+    +name : string
+    // Other attributes
+}
+
+entity Tables {
+    +id : int
+    +store_id : int
+    +name : string
+    +description : string
+    +capacity : int
+    +type : string
+    +availability : boolean
+}
+
+entity Consumer {
++id: int
++name: string
++phone_number: int
+}
+
+entity Reservations {
+    +id : int
+    +consumer_id : int
+    +table_id : int
+    +date : date
+    +start_time : string
+    +end_time : string
+    +total_price : decimal
+    +status : string
+}
+
+entity ReservationTransaction {
++id: int
+}
+
+entity Payments {
+    +id : int
+    +reservationconsumer_id : int
+    +amount : decimal
+    +date : date
+    +status : string
+}
+
+entity Feedback {
+    +id : int
+    +user_id : int
+    +store_id : int
+    +rating : int
+    +comments : string
+    +date : date
+}
+
+User "0..*" <-- "1" Customer : customer_id
+Customer "1" --> "0..*" Store : customer_id
+Store "1" --> "0..*" StoreDayHour : store_id
+Store "1" --> "0..*" Image : store_id
+Store "1" --> "0..*" Attribute : store_id
+Store "1" --> "0..1" BillingDetails : store_id
+Store "1" --> "0..*" Menu : store_id
+Store "1" --> "0..*" Tables : store_id
+Tables "1" --> "0..*" Reservations : table_id
+Reservations "1" --> "0..1" Payments : reservation_id
+Consumer "1" --> "0..*" Feedback : user_id
+Store "1" --> "0..*" Feedback : store_id
+Consumer "1" --> "0..*" Reservations: reservationconsumer_id
+ReservationTransaction "1" --> "1" Reservations
+Consumer "1" --> "1" User
+
+@enduml
