@@ -1,7 +1,7 @@
 package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.Customer;
-import net.trapezokomos.dashboard.exception.ResourceAlreadyExistsException;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.repository.CustomerRepository;
 import net.trapezokomos.dashboard.resources.CustomerResource;
 import net.trapezokomos.dashboard.utils.CustomerConverter;
@@ -25,12 +25,12 @@ public class CustomerService implements BaseService<CustomerResource> {
 
 
     @Override
-    public CustomerResource save(CustomerResource entity) throws ResourceAlreadyExistsException {
-        Customer customer = customerConverter.convertToEntity(entity);
+    public CustomerResource save(CustomerResource entity) throws GenericException {
+        Customer customer = customerConverter.convertToDatabaseColumn(entity);
         if (repository.existsByName(customer.getName())) {
-            throw new ResourceAlreadyExistsException();
+            throw new GenericException();
         }
-        return Optional.of(repository.save(customer)).map(customerConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not create the customer."));
+        return Optional.of(repository.save(customer)).map(customerConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the customer."));
     }
 
     @Override
@@ -42,12 +42,12 @@ public class CustomerService implements BaseService<CustomerResource> {
 
     @Override
     public Page<CustomerResource> list(Pageable pageable) {
-        return repository.findAll(pageable).map(customerConverter::convertToResource);
+        return repository.findAll(pageable).map(customerConverter::convertToEntityAttribute);
     }
 
     public CustomerResource get(Long id) {
         return repository.findById(id)
-                .map(customerConverter::convertToResource)
+                .map(customerConverter::convertToEntityAttribute)
                 .orElseThrow(() -> new RuntimeException("Could not find the customer."));
     }
 
@@ -58,6 +58,6 @@ public class CustomerService implements BaseService<CustomerResource> {
         existingCustomer.setName(entity.getName());
         existingCustomer.setPhoneNumber(entity.getPhoneNumber());
         existingCustomer.setUpdatedAt(new Date());
-        return Optional.of(repository.save(existingCustomer)).map(customerConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not update the customer."));
+        return Optional.of(repository.save(existingCustomer)).map(customerConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the customer."));
     }
 }

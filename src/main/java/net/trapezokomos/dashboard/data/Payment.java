@@ -4,18 +4,20 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "payment")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Payment extends BaseDocument {
+@SuperBuilder
+public class Payment extends AbstractEntity {
     @Column(name = "amount", nullable = false)
     private Double amount;
     @Column(name = "date", nullable = false)

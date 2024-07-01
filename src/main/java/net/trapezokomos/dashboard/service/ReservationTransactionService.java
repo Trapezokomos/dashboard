@@ -1,7 +1,7 @@
 package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.ReservationTransaction;
-import net.trapezokomos.dashboard.exception.ResourceAlreadyExistsException;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.repository.ReservationTransactionRepository;
 import net.trapezokomos.dashboard.resources.ReservationTransactionResource;
 import net.trapezokomos.dashboard.utils.ReservationTransactionConverter;
@@ -24,9 +24,9 @@ public class ReservationTransactionService implements BaseService<ReservationTra
 
 
     @Override
-    public ReservationTransactionResource save(ReservationTransactionResource entity) throws ResourceAlreadyExistsException{
-        ReservationTransaction reservationTransaction = reservationTransactionConverter.convertToEntity(entity);
-        return Optional.of(repository.save(reservationTransaction)).map(reservationTransactionConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not create the reservation transaction."));
+    public ReservationTransactionResource save(ReservationTransactionResource entity) throws GenericException {
+        ReservationTransaction reservationTransaction = reservationTransactionConverter.convertToDatabaseColumn(entity);
+        return Optional.of(repository.save(reservationTransaction)).map(reservationTransactionConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the reservation transaction."));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ReservationTransactionService implements BaseService<ReservationTra
 
     @Override
     public Page<ReservationTransactionResource> list(Pageable pageable) {
-        return repository.findAll(pageable).map(reservationTransactionConverter::convertToResource);
+        return repository.findAll(pageable).map(reservationTransactionConverter::convertToEntityAttribute);
     }
 
     @Override
@@ -48,13 +48,13 @@ public class ReservationTransactionService implements BaseService<ReservationTra
         existingReservationTransaction.setDetails(entity.getDetails());
         existingReservationTransaction.setCreatedAt(entity.getCreatedAt());
         existingReservationTransaction.setUpdatedAt(entity.getUpdatedAt());
-        return reservationTransactionConverter.convertToResource(repository.save(existingReservationTransaction));
+        return reservationTransactionConverter.convertToEntityAttribute(repository.save(existingReservationTransaction));
     }
 
     @Override
     public ReservationTransactionResource get(Long id) {
         return repository.findById(id)
-                .map(reservationTransactionConverter::convertToResource)
+                .map(reservationTransactionConverter::convertToEntityAttribute)
                 .orElseThrow(() -> new RuntimeException("Could not find the reservation transaction."));
     }
 }

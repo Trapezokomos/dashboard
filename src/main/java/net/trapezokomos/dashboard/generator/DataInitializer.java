@@ -3,7 +3,7 @@ package net.trapezokomos.dashboard.generator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.trapezokomos.dashboard.data.Role;
-import net.trapezokomos.dashboard.exception.ResourceAlreadyExistsException;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.resources.*;
 import net.trapezokomos.dashboard.service.*;
 import net.trapezokomos.dashboard.utils.*;
@@ -56,7 +56,7 @@ public class DataInitializer implements CommandLineRunner {
         list.forEach(user -> {
             try {
                 userService.save(user);
-            } catch (ResourceAlreadyExistsException e) {
+            } catch (GenericException e) {
                 // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
                 e.printStackTrace();
             }
@@ -73,7 +73,7 @@ public class DataInitializer implements CommandLineRunner {
         list.forEach(customer -> {
             try {
                 customerService.save(customer);
-            } catch (ResourceAlreadyExistsException e) {
+            } catch (GenericException e) {
                 e.printStackTrace();
             }
         });
@@ -89,7 +89,7 @@ public class DataInitializer implements CommandLineRunner {
         list.forEach(consumer -> {
             try {
                 consumerService.save(consumer);
-            } catch (ResourceAlreadyExistsException e) {
+            } catch (GenericException e) {
                 // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
                 e.printStackTrace();
             }
@@ -106,7 +106,7 @@ public class DataInitializer implements CommandLineRunner {
         list.forEach(reservationTransaction -> {
             try {
                 reservationTransactionService.save(reservationTransaction);
-            } catch (ResourceAlreadyExistsException e) {
+            } catch (GenericException e) {
                 // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
                 e.printStackTrace();
             }
@@ -123,7 +123,7 @@ public class DataInitializer implements CommandLineRunner {
         list.forEach(reservation -> {
             try {
                 reservationService.save(reservation);
-            } catch (ResourceAlreadyExistsException e) {
+            } catch (GenericException e) {
                 // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
                 e.printStackTrace();
             }
@@ -140,7 +140,7 @@ public class DataInitializer implements CommandLineRunner {
         list.forEach(payment -> {
             try {
                 paymentService.save(payment);
-            } catch (ResourceAlreadyExistsException e) {
+            } catch (GenericException e) {
                 // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
                 e.printStackTrace();
             }

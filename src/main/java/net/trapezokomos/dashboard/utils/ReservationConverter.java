@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.utils;
 
+import jakarta.persistence.AttributeConverter;
 import net.trapezokomos.dashboard.data.Reservation;
 import net.trapezokomos.dashboard.resources.ReservationResource;
 import org.springframework.stereotype.Component;
@@ -7,50 +8,48 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class ReservationConverter implements BaseConverter<ReservationResource, Reservation> {
+public class ReservationConverter implements AttributeConverter<ReservationResource, Reservation> {
 
     @Override
-    public ReservationResource convertToResource(Reservation reservation) {
-        ReservationResource reservationResource = new ReservationResource();
-        reservationResource.setId(reservation.getId());
-        reservationResource.setConsumerId(reservation.getConsumerId());
-        reservationResource.setTableId(reservation.getTableId());
-        reservationResource.setStartTime(reservation.getStartTime());
-        reservationResource.setEndTime(reservation.getEndTime());
-        reservationResource.setDate(reservation.getDate());
-        reservationResource.setTotalPrice(reservation.getTotalPrice());
-        reservationResource.setCreatedAt(reservation.getCreatedAt());
-        reservationResource.setStatus(reservation.getStatus());
-        reservationResource.setUpdatedAt(reservation.getUpdatedAt());
-        return reservationResource;
+    public Reservation convertToDatabaseColumn(ReservationResource reservationResource) {
+        return Reservation.builder()
+                .id(reservationResource.getId())
+                .consumerId(reservationResource.getConsumerId())
+                .tableId(reservationResource.getTableId())
+                .startTime(reservationResource.getStartTime())
+                .endTime(reservationResource.getEndTime())
+                .date(reservationResource.getDate())
+                .totalPrice(reservationResource.getTotalPrice())
+                .createdAt(reservationResource.getCreatedAt())
+                .status(reservationResource.getStatus())
+                .build();
     }
 
     @Override
-    public Reservation convertToEntity(ReservationResource reservationResource) {
-        Reservation reservation = new Reservation();
-        reservation.setId(reservationResource.getId());
-        reservation.setConsumerId(reservationResource.getConsumerId());
-        reservation.setTableId(reservationResource.getTableId());
-        reservation.setStartTime(reservationResource.getStartTime());
-        reservation.setEndTime(reservationResource.getEndTime());
-        reservation.setDate(reservationResource.getDate());
-        reservation.setTotalPrice(reservationResource.getTotalPrice());
-        reservation.setCreatedAt(reservationResource.getCreatedAt());
-        reservation.setStatus(reservationResource.getStatus());
-        reservation.setUpdatedAt(reservationResource.getUpdatedAt());
-        return reservation;
+    public ReservationResource convertToEntityAttribute(Reservation reservation) {
+        return ReservationResource.builder()
+                .id(reservation.getId())
+                .consumerId(reservation.getConsumerId())
+                .tableId(reservation.getTableId())
+                .startTime(reservation.getStartTime())
+                .endTime(reservation.getEndTime())
+                .date(reservation.getDate())
+                .totalPrice(reservation.getTotalPrice())
+                .createdAt(reservation.getCreatedAt())
+                .status(reservation.getStatus())
+                .build();
     }
 
     public ReservationResource createReservation(Long consumerId, Long tableId, Date startTime, Date endTime, Date date, Double totalPrice, Date createdAt, String status) {
-        ReservationResource reservationResource = new ReservationResource();
-        reservationResource.setConsumerId(consumerId);
-        reservationResource.setTableId(tableId);
-        reservationResource.setStartTime(startTime);
-        reservationResource.setEndTime(endTime);
-        reservationResource.setDate(date);
-        reservationResource.setStatus(status);
-        reservationResource.setTotalPrice(totalPrice);
-        reservationResource.setCreatedAt(createdAt);
-        return reservationResource;
+        return ReservationResource.builder()
+                .consumerId(consumerId)
+                .tableId(tableId)
+                .startTime(startTime)
+                .endTime(endTime)
+                .date(date)
+                .totalPrice(totalPrice)
+                .createdAt(createdAt)
+                .status(status)
+                .build();
     }
 }

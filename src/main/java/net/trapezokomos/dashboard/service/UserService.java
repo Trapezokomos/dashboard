@@ -1,7 +1,7 @@
 package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.User;
-import net.trapezokomos.dashboard.exception.ResourceAlreadyExistsException;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.repository.UserRepository;
 import net.trapezokomos.dashboard.resources.UserResource;
 import net.trapezokomos.dashboard.utils.UserConverter;
@@ -18,8 +18,7 @@ import java.util.Optional;
 public class UserService implements BaseService<UserResource> {
 
     private final UserRepository repository;
-    @Autowired
-    private UserConverter userConverter;
+    @Autowired private UserConverter userConverter;
 
     public UserService(UserRepository repository) {
         this.repository = repository;
@@ -27,16 +26,16 @@ public class UserService implements BaseService<UserResource> {
 
     @Override
     public Page<UserResource> list(Pageable pageable) {
-        return repository.findAll(pageable).map(userConverter::convertToResource);
+        return repository.findAll(pageable).map(userConverter::convertToEntityAttribute);
     }
 
     @Override
-    public UserResource save(UserResource userResource) throws ResourceAlreadyExistsException {
-        User user = userConverter.convertToEntity(userResource);
+    public UserResource save(UserResource userResource) throws GenericException {
+        User user = userConverter.convertToDatabaseColumn(userResource);
         if (repository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
-            throw new ResourceAlreadyExistsException();
+            throw new GenericException();
         }
-        return Optional.of(repository.save(user)).map(userConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not create the user."));
+        return Optional.of(repository.save(user)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the user."));
     }
 
     @Override
@@ -51,7 +50,7 @@ public class UserService implements BaseService<UserResource> {
         existingUser.setCustomerId(userResource.getCustomerId());
         existingUser.setRoles(userResource.getRoles());
         existingUser.setUpdatedAt(new Date());
-        return Optional.of(repository.save(existingUser)).map(userConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not update the user."));
+        return Optional.of(repository.save(existingUser)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the user."));
     }
 
     @Override
@@ -63,15 +62,15 @@ public class UserService implements BaseService<UserResource> {
 
     public UserResource get(Long id) {
         return repository.findById(id)
-                .map(userConverter::convertToResource)
+                .map(userConverter::convertToEntityAttribute)
                 .orElseThrow(() -> new RuntimeException("Could not find the user."));
     }
 
     public Page<UserResource> list(Pageable pageable, Specification<User> filter) {
-        return repository.findAll(filter, pageable).map(userConverter::convertToResource);
+        return repository.findAll(filter, pageable).map(userConverter::convertToEntityAttribute);
     }
 
     //    public List<UserResource> search(String filterText) {
-//        return repository.search(filterText).stream().map(userConverter::convertToResource).collect(Collectors.toList());
+//        return repository.search(filterText).stream().map(userConverter::convertToEntityAttribute).collect(Collectors.toList());
 //    }
 }

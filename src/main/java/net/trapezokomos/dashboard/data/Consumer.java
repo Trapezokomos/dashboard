@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(
@@ -18,8 +20,8 @@ import lombok.*;
         })
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Consumer extends BaseDocument {
+@SuperBuilder
+public class Consumer extends AbstractEntity {
     @Column(
             name = "username",
             nullable = false

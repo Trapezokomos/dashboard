@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class WebExceptionHandler {
 
-    @ExceptionHandler({ ResourceNotFoundException.class, BadRequestException.class })
+    @ExceptionHandler({ GenericRunTimeException.class, BadRequestException.class })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorInfo handleNotFound(Exception e) {
         log.warn(e.getMessage());
         return ErrorInfo.createErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler({ResourceAlreadyExistsException.class})
+    @ExceptionHandler({GenericException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorInfo handleConflict(Exception e) {
         log.warn(e.getMessage());

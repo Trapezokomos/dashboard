@@ -4,18 +4,20 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "reservations")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Reservation extends BaseDocument {
+@SuperBuilder
+public class Reservation extends AbstractEntity {
     @Column(name = "consumerId", nullable = false)
     private Long consumerId;
     @Column(name = "tableId", nullable = false)

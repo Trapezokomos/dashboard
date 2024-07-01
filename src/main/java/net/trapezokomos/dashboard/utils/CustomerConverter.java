@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.utils;
 
+import jakarta.persistence.AttributeConverter;
 import net.trapezokomos.dashboard.data.Customer;
 import net.trapezokomos.dashboard.resources.CustomerResource;
 import org.springframework.stereotype.Component;
@@ -7,36 +8,36 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class CustomerConverter implements BaseConverter<CustomerResource, Customer> {
+public class CustomerConverter implements AttributeConverter<CustomerResource, Customer> {
 
     @Override
-    public CustomerResource convertToResource(Customer entity) {
-        CustomerResource resource = new CustomerResource();
-        resource.setId(entity.getId());
-        resource.setName(entity.getName());
-        resource.setPhoneNumber(entity.getPhoneNumber());
-        resource.setCreatedAt(entity.getCreatedAt());
-        resource.setUpdatedAt(entity.getUpdatedAt());
-        return resource;
+    public Customer convertToDatabaseColumn(CustomerResource customerResource) {
+        return Customer.builder()
+                .id(customerResource.getId())
+                .name(customerResource.getName())
+                .phoneNumber(customerResource.getPhoneNumber())
+                .createdAt(customerResource.getCreatedAt())
+                .updatedAt(customerResource.getUpdatedAt())
+                .build();
     }
 
     @Override
-    public Customer convertToEntity(CustomerResource resource) {
-        Customer entity = new Customer();
-        entity.setId(resource.getId());
-        entity.setName(resource.getName());
-        entity.setPhoneNumber(resource.getPhoneNumber());
-        entity.setCreatedAt(resource.getCreatedAt());
-        entity.setUpdatedAt(resource.getUpdatedAt());
-        return entity;
+    public CustomerResource convertToEntityAttribute(Customer customer) {
+        return CustomerResource.builder()
+                .id(customer.getId())
+                .name(customer.getName())
+                .phoneNumber(customer.getPhoneNumber())
+                .createdAt(customer.getCreatedAt())
+                .updatedAt(customer.getUpdatedAt())
+                .build();
     }
 
     public CustomerResource createCustomerResource(String name, String phoneNumber, Date createdAt, Date updatedAt) {
-        CustomerResource resource = new CustomerResource();
-        resource.setName(name);
-        resource.setPhoneNumber(phoneNumber);
-        resource.setCreatedAt(createdAt);
-        resource.setUpdatedAt(updatedAt);
-        return resource;
+        return CustomerResource.builder()
+                .name(name)
+                .phoneNumber(phoneNumber)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
     }
 }

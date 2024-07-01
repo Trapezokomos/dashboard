@@ -1,7 +1,7 @@
 package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.Consumer;
-import net.trapezokomos.dashboard.exception.ResourceAlreadyExistsException;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.repository.ConsumerRepository;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import net.trapezokomos.dashboard.utils.ConsumerConverter;
@@ -23,14 +23,13 @@ public class ConsumerService implements BaseService<ConsumerResource> {
         this.repository = repository;
     }
 
-
     @Override
-    public ConsumerResource save(ConsumerResource entity) throws ResourceAlreadyExistsException {
-        Consumer consumer = consumerConverter.convertToEntity(entity);
+    public ConsumerResource save(ConsumerResource entity) throws GenericException {
+        Consumer consumer = consumerConverter.convertToDatabaseColumn(entity);
         if (repository.existsByEmail(consumer.getEmail())) {
-            throw new ResourceAlreadyExistsException();
+            throw new GenericException();
         }
-        return Optional.of(repository.save(consumer)).map(consumerConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not create the consumer."));
+        return Optional.of(repository.save(consumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the consumer."));
     }
 
     @Override
@@ -42,7 +41,7 @@ public class ConsumerService implements BaseService<ConsumerResource> {
 
     @Override
     public Page<ConsumerResource> list(Pageable pageable) {
-        return repository.findAll(pageable).map(consumerConverter::convertToResource);
+        return repository.findAll(pageable).map(consumerConverter::convertToEntityAttribute);
     }
 
     @Override
@@ -56,13 +55,13 @@ public class ConsumerService implements BaseService<ConsumerResource> {
         existingConsumer.setEmail(entity.getEmail());
         existingConsumer.setPhoneNumber(entity.getPhoneNumber());
         existingConsumer.setUpdatedAt(new Date());
-        return Optional.of(repository.save(existingConsumer)).map(consumerConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not update the consumer."));
+        return Optional.of(repository.save(existingConsumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the consumer."));
     }
 
     @Override
     public ConsumerResource get(Long T) {
         return repository.findById(T)
-                .map(consumerConverter::convertToResource)
+                .map(consumerConverter::convertToEntityAttribute)
                 .orElseThrow(() -> new RuntimeException("Could not find the consumer."));
     }
 }

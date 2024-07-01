@@ -1,7 +1,7 @@
 package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.Reservation;
-import net.trapezokomos.dashboard.exception.ResourceAlreadyExistsException;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.repository.ReservationRepository;
 import net.trapezokomos.dashboard.resources.ReservationResource;
 import net.trapezokomos.dashboard.utils.ReservationConverter;
@@ -24,9 +24,9 @@ public class ReservationService implements BaseService<ReservationResource> {
 
 
     @Override
-    public ReservationResource save(ReservationResource entity) throws ResourceAlreadyExistsException {
-        Reservation reservation = reservationConverter.convertToEntity(entity);
-        return Optional.of(repository.save(reservation)).map(reservationConverter::convertToResource).orElseThrow(() -> new RuntimeException("Could not create the reservation."));
+    public ReservationResource save(ReservationResource entity) throws GenericException {
+        Reservation reservation = reservationConverter.convertToDatabaseColumn(entity);
+        return Optional.of(repository.save(reservation)).map(reservationConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the reservation."));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ReservationService implements BaseService<ReservationResource> {
 
     @Override
     public Page<ReservationResource> list(Pageable pageable) {
-        return repository.findAll(pageable).map(reservationConverter::convertToResource);
+        return repository.findAll(pageable).map(reservationConverter::convertToEntityAttribute);
     }
 
     @Override
@@ -52,13 +52,13 @@ public class ReservationService implements BaseService<ReservationResource> {
         existingReservation.setEndTime(entity.getEndTime());
         existingReservation.setTotalPrice(entity.getTotalPrice());
         existingReservation.setStatus(entity.getStatus());
-        return reservationConverter.convertToResource(repository.save(existingReservation));
+        return reservationConverter.convertToEntityAttribute(repository.save(existingReservation));
     }
 
     @Override
     public ReservationResource get(Long T) {
         return repository.findById(T)
-                .map(reservationConverter::convertToResource)
+                .map(reservationConverter::convertToEntityAttribute)
                 .orElseThrow(() -> new RuntimeException("Could not find the reservation."));
     }
 }

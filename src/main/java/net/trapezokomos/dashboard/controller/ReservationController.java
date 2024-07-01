@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/reservation")
+@RequestMapping("/api/v1/reservation")
 @Tag(name = "Reservation", description = "Basic operations for reservations.")
 public class ReservationController {
     

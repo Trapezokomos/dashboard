@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.utils;
 
+import jakarta.persistence.AttributeConverter;
 import net.trapezokomos.dashboard.data.Payment;
 import net.trapezokomos.dashboard.resources.PaymentResource;
 import org.springframework.stereotype.Component;
@@ -7,42 +8,42 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class PaymentConverter implements BaseConverter<PaymentResource, Payment> {
+public class PaymentConverter implements AttributeConverter<PaymentResource, Payment> {
 
     @Override
-    public PaymentResource convertToResource(Payment payment) {
-        PaymentResource paymentResource = new PaymentResource();
-        paymentResource.setId(payment.getId());
-        paymentResource.setAmount(payment.getAmount());
-        paymentResource.setDate(payment.getDate());
-        paymentResource.setStatus(payment.getStatus());
-        paymentResource.setReservationConsumerId(payment.getReservationConsumerId());
-        paymentResource.setCreatedAt(payment.getCreatedAt());
-        paymentResource.setUpdatedAt(payment.getUpdatedAt());
-        return paymentResource;
+    public Payment convertToDatabaseColumn(PaymentResource paymentResource) {
+        return Payment.builder()
+                .id(paymentResource.getId())
+                .amount(paymentResource.getAmount())
+                .date(paymentResource.getDate())
+                .status(paymentResource.getStatus())
+                .reservationConsumerId(paymentResource.getReservationConsumerId())
+                .createdAt(paymentResource.getCreatedAt())
+                .updatedAt(paymentResource.getUpdatedAt())
+                .build();
     }
 
     @Override
-    public Payment convertToEntity(PaymentResource paymentResource) {
-        Payment payment = new Payment();
-        payment.setId(paymentResource.getId());
-        payment.setAmount(paymentResource.getAmount());
-        payment.setDate(paymentResource.getDate());
-        payment.setStatus(paymentResource.getStatus());
-        payment.setReservationConsumerId(paymentResource.getReservationConsumerId());
-        payment.setCreatedAt(paymentResource.getCreatedAt());
-        payment.setUpdatedAt(paymentResource.getUpdatedAt());
-        return payment;
+    public PaymentResource convertToEntityAttribute(Payment payment) {
+        return PaymentResource.builder()
+                .id(payment.getId())
+                .amount(payment.getAmount())
+                .date(payment.getDate())
+                .status(payment.getStatus())
+                .reservationConsumerId(payment.getReservationConsumerId())
+                .createdAt(payment.getCreatedAt())
+                .updatedAt(payment.getUpdatedAt())
+                .build();
     }
 
     public PaymentResource createPaymentResource(Double amount, Date date, String status, Long reservationConsumerId, Date createdAt, Date updatedAt) {
-        PaymentResource paymentResource = new PaymentResource();
-        paymentResource.setAmount(amount);
-        paymentResource.setDate(date);
-        paymentResource.setStatus(status);
-        paymentResource.setReservationConsumerId(reservationConsumerId);
-        paymentResource.setCreatedAt(createdAt);
-        paymentResource.setUpdatedAt(updatedAt);
-        return paymentResource;
+        return PaymentResource.builder()
+                .amount(amount)
+                .date(date)
+                .status(status)
+                .reservationConsumerId(reservationConsumerId)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
     }
 }

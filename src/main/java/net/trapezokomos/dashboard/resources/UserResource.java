@@ -1,12 +1,16 @@
 package net.trapezokomos.dashboard.resources;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import net.trapezokomos.dashboard.data.Role;
 
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class UserResource extends BaseResource {
         private String username;

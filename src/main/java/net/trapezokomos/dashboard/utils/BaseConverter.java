@@ -1,7 +1,10 @@
 package net.trapezokomos.dashboard.utils;
 
-public interface BaseConverter<T, D> {
+import jakarta.persistence.AttributeConverter;
+import org.springframework.stereotype.Component;
 
-    T convertToResource(D d);
-    D convertToEntity(T t);
+@Component
+public interface BaseConverter<T, D> extends AttributeConverter<T, D>  {
+    D convertToDatabaseColumn(T entity);
+    T convertToEntityAttribute(D entity);
 }

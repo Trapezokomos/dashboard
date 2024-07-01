@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Set;
 
@@ -18,10 +19,11 @@ import java.util.Set;
 )
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Builder
+@Getter
+@Setter
+@SuperBuilder
 @ToString
-public class User extends BaseDocument {
+public class User extends AbstractEntity {
     @Column(
             name = "username",
             nullable = false

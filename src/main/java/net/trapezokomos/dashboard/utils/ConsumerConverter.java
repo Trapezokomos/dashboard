@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.utils;
 
+import jakarta.persistence.AttributeConverter;
 import net.trapezokomos.dashboard.data.Consumer;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import org.springframework.stereotype.Component;
@@ -7,47 +8,48 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class ConsumerConverter implements BaseConverter<ConsumerResource, Consumer> {
+public class ConsumerConverter implements AttributeConverter<ConsumerResource, Consumer> {
+
     @Override
-    public ConsumerResource convertToResource(Consumer consumer) {
-        ConsumerResource consumerResource = new ConsumerResource();
-        consumerResource.setId(consumer.getId());
-        consumerResource.setUsername(consumer.getUsername());
-        consumerResource.setPassword(consumer.getPassword());
-        consumerResource.setFirstName(consumer.getFirstName());
-        consumerResource.setLastName(consumer.getLastName());
-        consumerResource.setPhoneNumber(consumer.getPhoneNumber());
-        consumerResource.setEmail(consumer.getEmail());
-        consumerResource.setCreatedAt(consumer.getCreatedAt());
-        consumerResource.setUpdatedAt(consumer.getUpdatedAt());
-        return consumerResource;
+    public Consumer convertToDatabaseColumn(ConsumerResource consumerResource) {
+        return Consumer.builder()
+                .id(consumerResource.getId())
+                .email(consumerResource.getEmail())
+                .firstName(consumerResource.getFirstName())
+                .lastName(consumerResource.getLastName())
+                .phoneNumber(consumerResource.getPhoneNumber())
+                .username(consumerResource.getUsername())
+                .password(consumerResource.getPassword())
+                .createdAt(consumerResource.getCreatedAt())
+                .updatedAt(consumerResource.getUpdatedAt())
+                .build();
     }
 
     @Override
-    public Consumer convertToEntity(ConsumerResource consumerResource) {
-        Consumer consumer = new Consumer();
-        consumer.setId(consumerResource.getId());
-        consumer.setUsername(consumerResource.getUsername());
-        consumer.setPassword(consumerResource.getPassword());
-        consumer.setFirstName(consumerResource.getFirstName());
-        consumer.setLastName(consumerResource.getLastName());
-        consumer.setPhoneNumber(consumerResource.getPhoneNumber());
-        consumer.setEmail(consumerResource.getEmail());
-        consumer.setCreatedAt(consumerResource.getCreatedAt());
-        consumer.setUpdatedAt(consumerResource.getUpdatedAt());
-        return consumer;
+    public ConsumerResource convertToEntityAttribute(Consumer consumer) {
+        return ConsumerResource.builder()
+                .id(consumer.getId())
+                .email(consumer.getEmail())
+                .firstName(consumer.getFirstName())
+                .lastName(consumer.getLastName())
+                .phoneNumber(consumer.getPhoneNumber())
+                .username(consumer.getUsername())
+                .password(consumer.getPassword())
+                .createdAt(consumer.getCreatedAt())
+                .updatedAt(consumer.getUpdatedAt())
+                .build();
     }
 
     public ConsumerResource createConsumerResource(String username, String password, String firstName, String lastName, String phoneNumber, String email, Date createdAt, Date updatedAt) {
-        ConsumerResource consumerResource = new ConsumerResource();
-        consumerResource.setUsername(username);
-        consumerResource.setPassword(password);
-        consumerResource.setFirstName(firstName);
-        consumerResource.setLastName(lastName);
-        consumerResource.setPhoneNumber(phoneNumber);
-        consumerResource.setEmail(email);
-        consumerResource.setCreatedAt(createdAt);
-        consumerResource.setUpdatedAt(updatedAt);
-        return consumerResource;
+        return ConsumerResource.builder()
+                .email(email)
+                .firstName(firstName)
+                .lastName(lastName)
+                .phoneNumber(phoneNumber)
+                .username(username)
+                .password(password)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
     }
 }

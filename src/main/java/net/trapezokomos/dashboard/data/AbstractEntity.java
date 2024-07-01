@@ -1,15 +1,20 @@
 package net.trapezokomos.dashboard.data;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.util.Date;
 
-@Data
 @MappedSuperclass
-public class BaseDocument {
+@Getter
+@Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+public class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idgenerator")
@@ -36,7 +41,7 @@ public class BaseDocument {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof BaseDocument that)) {
+        if (!(obj instanceof AbstractEntity that)) {
             return false; // null or not an AbstractEntity class
         }
         if (getId() != null) {
