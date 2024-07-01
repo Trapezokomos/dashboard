@@ -1,8 +1,0 @@
-CREATE TABLE IF NOT EXISTS "user" (
-  ID SERIAL PRIMARY KEY,
-  Name VARCHAR(255) NOT NULL,
-  Surname VARCHAR(255) NOT NULL,
-  Email VARCHAR(255) NOT NULL,
-  Authorities TEXT[],
-  CONSTRAINT unique_email UNIQUE (Email)
-);
