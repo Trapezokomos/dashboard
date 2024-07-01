@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import net.trapezokomos.dashboard.resources.UserResource;
 import net.trapezokomos.dashboard.service.UserService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User", description = "Basic operations for users.")
 public class UserController {
 
     private final UserService userService;
@@ -26,13 +28,6 @@ public class UserController {
     ) {
         return ResponseEntity.ok(userService.list(PageRequest.of(pageNumber, pageSize)));
     }
-
-//    @GetMapping("/search")
-//    public ResponseEntity<List<UserResource>> searchUser(
-//            @RequestParam(value = "filterText", required = true) String filterText
-//    ) {
-//        return ResponseEntity.ok(userService.search(filterText));
-//    }
 
     @GetMapping("/{id}")
     public ResponseEntity getUser(
@@ -77,4 +72,11 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
+
+    //    @GetMapping("/search")
+//    public ResponseEntity<List<UserResource>> searchUser(
+//            @RequestParam(value = "filterText", required = true) String filterText
+//    ) {
+//        return ResponseEntity.ok(userService.search(filterText));
+//    }
 }

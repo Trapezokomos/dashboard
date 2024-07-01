@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import net.trapezokomos.dashboard.service.ConsumerService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/consumer")
+@Tag(name = "Consumer", description = "Basic operations for consumers.")
 public class ConsumerController {
     
     private final ConsumerService consumerService;

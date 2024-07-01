@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import net.trapezokomos.dashboard.resources.PaymentResource;
 import net.trapezokomos.dashboard.service.PaymentService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/payment")
+@Tag(name = "Payment", description = "Basic operations for payments.")
 public class PaymentController {
     
     private final PaymentService paymentService;

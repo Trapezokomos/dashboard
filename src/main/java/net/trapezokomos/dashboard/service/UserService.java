@@ -67,11 +67,11 @@ public class UserService implements BaseService<UserResource> {
                 .orElseThrow(() -> new RuntimeException("Could not find the user."));
     }
 
-//    public List<UserResource> search(String filterText) {
-//        return repository.search(filterText).stream().map(userConverter::convertToResource).collect(Collectors.toList());
-//    }
-
     public Page<UserResource> list(Pageable pageable, Specification<User> filter) {
         return repository.findAll(filter, pageable).map(userConverter::convertToResource);
     }
+
+    //    public List<UserResource> search(String filterText) {
+//        return repository.search(filterText).stream().map(userConverter::convertToResource).collect(Collectors.toList());
+//    }
 }

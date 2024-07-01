@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import net.trapezokomos.dashboard.resources.ReservationTransactionResource;
 import net.trapezokomos.dashboard.service.ReservationTransactionService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/reservation-transaction")
+@Tag(name = "Reservation Transaction", description = "Basic operations for reservation transactions.")
 public class ReservationTransactionController {
     
     private final ReservationTransactionService reservationTransactionService;
