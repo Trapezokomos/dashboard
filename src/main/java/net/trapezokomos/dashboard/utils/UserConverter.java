@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Component
-public class UserConverter implements AbstractConverter<UserResource, User> {
+public class UserConverter implements BaseConverter<UserResource, User> {
 
     @Override
     public UserResource convertToResource(User user) {

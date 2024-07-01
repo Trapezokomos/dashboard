@@ -1,8 +1,8 @@
 package net.trapezokomos.dashboard.controller;
 
 import jakarta.validation.Valid;
-import net.trapezokomos.dashboard.resources.UserResource;
-import net.trapezokomos.dashboard.service.UserService;
+import net.trapezokomos.dashboard.resources.ReservationTransactionResource;
+import net.trapezokomos.dashboard.service.ReservationTransactionService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -10,68 +10,61 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
-
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
+@RequestMapping("/reservation-transaction")
+public class ReservationTransactionController {
+    
+    private final ReservationTransactionService reservationTransactionService;
+    
+    public ReservationTransactionController(ReservationTransactionService reservationTransactionService) {
+        this.reservationTransactionService = reservationTransactionService;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<UserResource>> getUsers(
+    public ResponseEntity<Page<ReservationTransactionResource>> getReservationTransactions(
             @RequestParam(value = "pageNumber", required = true, defaultValue = "0") Integer pageNumber,
             @RequestParam(value = "pageSize", required = true, defaultValue = "10") Integer pageSize
     ) {
-        return ResponseEntity.ok(userService.list(PageRequest.of(pageNumber, pageSize)));
+        return ResponseEntity.ok(reservationTransactionService.list(PageRequest.of(pageNumber, pageSize)));
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<UserResource>> searchUser(
-//            @RequestParam(value = "filterText", required = true) String filterText
-//    ) {
-//        return ResponseEntity.ok(userService.search(filterText));
-//    }
-
     @GetMapping("/{id}")
-    public ResponseEntity getUser(
+    public ResponseEntity getReservationTransaction(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            return ResponseEntity.ok(userService.get(id));
+            return ResponseEntity.ok(reservationTransactionService.get(id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity createUser(@RequestBody @Valid UserResource userResource) {
+    public ResponseEntity createReservationTransaction(@RequestBody @Valid ReservationTransactionResource ReservationTransactionResource) {
         try {
-            return ResponseEntity.ok(userService.save(userResource));
+            return ResponseEntity.ok(reservationTransactionService.save(ReservationTransactionResource));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateUser(
+    public ResponseEntity updateReservationTransaction(
             @RequestParam(value = "id", required = true) Long id,
-            @RequestBody UserResource userResource
+            @RequestBody ReservationTransactionResource ReservationTransactionResource
     ) {
         try {
-            return ResponseEntity.ok(userService.update(userResource, id));
+            return ResponseEntity.ok(reservationTransactionService.update(ReservationTransactionResource, id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(
+    public ResponseEntity deleteReservationTransaction(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            userService.delete(id);
+            reservationTransactionService.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());

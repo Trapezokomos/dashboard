@@ -1,8 +1,8 @@
 package net.trapezokomos.dashboard.controller;
 
 import jakarta.validation.Valid;
-import net.trapezokomos.dashboard.resources.UserResource;
-import net.trapezokomos.dashboard.service.UserService;
+import net.trapezokomos.dashboard.resources.CustomerResource;
+import net.trapezokomos.dashboard.service.CustomerService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -10,68 +10,61 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/customer")
+public class CustomerController {
 
-    private final UserService userService;
+    private final CustomerService customerService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<UserResource>> getUsers(
+    public ResponseEntity<Page<CustomerResource>> getCustomers(
             @RequestParam(value = "pageNumber", required = true, defaultValue = "0") Integer pageNumber,
             @RequestParam(value = "pageSize", required = true, defaultValue = "10") Integer pageSize
     ) {
-        return ResponseEntity.ok(userService.list(PageRequest.of(pageNumber, pageSize)));
+        return ResponseEntity.ok(customerService.list(PageRequest.of(pageNumber, pageSize)));
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<UserResource>> searchUser(
-//            @RequestParam(value = "filterText", required = true) String filterText
-//    ) {
-//        return ResponseEntity.ok(userService.search(filterText));
-//    }
-
     @GetMapping("/{id}")
-    public ResponseEntity getUser(
+    public ResponseEntity getCustomer(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            return ResponseEntity.ok(userService.get(id));
+            return ResponseEntity.ok(customerService.get(id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity createUser(@RequestBody @Valid UserResource userResource) {
+    public ResponseEntity createCustomer(@RequestBody @Valid CustomerResource customerResource) {
         try {
-            return ResponseEntity.ok(userService.save(userResource));
+            return ResponseEntity.ok(customerService.save(customerResource));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateUser(
+    public ResponseEntity updateCustomer(
             @RequestParam(value = "id", required = true) Long id,
-            @RequestBody UserResource userResource
+            @RequestBody CustomerResource customerResource
     ) {
         try {
-            return ResponseEntity.ok(userService.update(userResource, id));
+            return ResponseEntity.ok(customerService.update(customerResource, id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(
+    public ResponseEntity deleteCustomer(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            userService.delete(id);
+            customerService.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());

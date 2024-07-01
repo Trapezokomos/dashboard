@@ -1,8 +1,8 @@
 package net.trapezokomos.dashboard.controller;
 
 import jakarta.validation.Valid;
-import net.trapezokomos.dashboard.resources.UserResource;
-import net.trapezokomos.dashboard.service.UserService;
+import net.trapezokomos.dashboard.resources.ReservationResource;
+import net.trapezokomos.dashboard.service.ReservationService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -10,68 +10,61 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
-
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
+@RequestMapping("/reservation")
+public class ReservationController {
+    
+    private final ReservationService reservationService;
+    
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<UserResource>> getUsers(
+    public ResponseEntity<Page<ReservationResource>> getReservations(
             @RequestParam(value = "pageNumber", required = true, defaultValue = "0") Integer pageNumber,
             @RequestParam(value = "pageSize", required = true, defaultValue = "10") Integer pageSize
     ) {
-        return ResponseEntity.ok(userService.list(PageRequest.of(pageNumber, pageSize)));
+        return ResponseEntity.ok(reservationService.list(PageRequest.of(pageNumber, pageSize)));
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<UserResource>> searchUser(
-//            @RequestParam(value = "filterText", required = true) String filterText
-//    ) {
-//        return ResponseEntity.ok(userService.search(filterText));
-//    }
-
     @GetMapping("/{id}")
-    public ResponseEntity getUser(
+    public ResponseEntity getReservation(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            return ResponseEntity.ok(userService.get(id));
+            return ResponseEntity.ok(reservationService.get(id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity createUser(@RequestBody @Valid UserResource userResource) {
+    public ResponseEntity createReservation(@RequestBody @Valid ReservationResource ReservationResource) {
         try {
-            return ResponseEntity.ok(userService.save(userResource));
+            return ResponseEntity.ok(reservationService.save(ReservationResource));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateUser(
+    public ResponseEntity updateReservation(
             @RequestParam(value = "id", required = true) Long id,
-            @RequestBody UserResource userResource
+            @RequestBody ReservationResource ReservationResource
     ) {
         try {
-            return ResponseEntity.ok(userService.update(userResource, id));
+            return ResponseEntity.ok(reservationService.update(ReservationResource, id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(
+    public ResponseEntity deleteReservation(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            userService.delete(id);
+            reservationService.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());

@@ -12,12 +12,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-public class UserService implements IAbstractService<User, UserResource> {
+public class UserService implements BaseService<UserResource> {
 
     private final UserRepository repository;
     @Autowired
@@ -69,9 +67,9 @@ public class UserService implements IAbstractService<User, UserResource> {
                 .orElseThrow(() -> new RuntimeException("Could not find the user."));
     }
 
-    public List<UserResource> search(String filterText) {
-        return repository.search(filterText).stream().map(userConverter::convertToResource).collect(Collectors.toList());
-    }
+//    public List<UserResource> search(String filterText) {
+//        return repository.search(filterText).stream().map(userConverter::convertToResource).collect(Collectors.toList());
+//    }
 
     public Page<UserResource> list(Pageable pageable, Specification<User> filter) {
         return repository.findAll(filter, pageable).map(userConverter::convertToResource);

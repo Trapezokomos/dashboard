@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class UserResource extends AbstractResource {
+public class UserResource extends BaseResource {
         private String username;
         private String email;
         private String first_name;

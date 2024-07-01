@@ -1,8 +1,8 @@
 package net.trapezokomos.dashboard.controller;
 
 import jakarta.validation.Valid;
-import net.trapezokomos.dashboard.resources.UserResource;
-import net.trapezokomos.dashboard.service.UserService;
+import net.trapezokomos.dashboard.resources.PaymentResource;
+import net.trapezokomos.dashboard.service.PaymentService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -10,68 +10,61 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
-public class UserController {
-
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
+@RequestMapping("/payment")
+public class PaymentController {
+    
+    private final PaymentService paymentService;
+    
+    public PaymentController(PaymentService paymentService) {
+        this.paymentService = paymentService;
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<UserResource>> getUsers(
+    public ResponseEntity<Page<PaymentResource>> getPayments(
             @RequestParam(value = "pageNumber", required = true, defaultValue = "0") Integer pageNumber,
             @RequestParam(value = "pageSize", required = true, defaultValue = "10") Integer pageSize
     ) {
-        return ResponseEntity.ok(userService.list(PageRequest.of(pageNumber, pageSize)));
+        return ResponseEntity.ok(paymentService.list(PageRequest.of(pageNumber, pageSize)));
     }
 
-//    @GetMapping("/search")
-//    public ResponseEntity<List<UserResource>> searchUser(
-//            @RequestParam(value = "filterText", required = true) String filterText
-//    ) {
-//        return ResponseEntity.ok(userService.search(filterText));
-//    }
-
     @GetMapping("/{id}")
-    public ResponseEntity getUser(
+    public ResponseEntity getPayment(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            return ResponseEntity.ok(userService.get(id));
+            return ResponseEntity.ok(paymentService.get(id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity createUser(@RequestBody @Valid UserResource userResource) {
+    public ResponseEntity createPayment(@RequestBody @Valid PaymentResource PaymentResource) {
         try {
-            return ResponseEntity.ok(userService.save(userResource));
+            return ResponseEntity.ok(paymentService.save(PaymentResource));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateUser(
+    public ResponseEntity updatePayment(
             @RequestParam(value = "id", required = true) Long id,
-            @RequestBody UserResource userResource
+            @RequestBody PaymentResource PaymentResource
     ) {
         try {
-            return ResponseEntity.ok(userService.update(userResource, id));
+            return ResponseEntity.ok(paymentService.update(PaymentResource, id));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(
+    public ResponseEntity deletePayment(
             @RequestParam(value = "id", required = true) Long id
     ) {
         try {
-            userService.delete(id);
+            paymentService.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());

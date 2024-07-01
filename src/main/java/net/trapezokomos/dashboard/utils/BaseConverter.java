@@ -1,6 +1,6 @@
 package net.trapezokomos.dashboard.utils;
 
-public interface AbstractConverter<T, D> {
+public interface BaseConverter<T, D> {
 
     T convertToResource(D d);
     D convertToEntity(T t);

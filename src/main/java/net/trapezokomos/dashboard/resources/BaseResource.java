@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode
-public class AbstractResource {
+public class BaseResource {
     private Long id;
     private int version;
     private Date createdAt;
