@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.resources.UserResource;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Set;
 
 @Component
 public class UserConverter implements AttributeConverter<UserResource, User> {
@@ -21,8 +20,7 @@ public class UserConverter implements AttributeConverter<UserResource, User> {
                 .firstName(userResource.getFirst_name())
                 .lastName(userResource.getLast_name())
                 .phoneNumber(userResource.getPhone_number())
-                .roles(userResource.getRoles())
-                .username(userResource.getUsername())
+                .role(userResource.getRole())
                 .createdAt(userResource.getCreatedAt())
                 .updatedAt(userResource.getUpdatedAt())
                 .build();
@@ -37,22 +35,20 @@ public class UserConverter implements AttributeConverter<UserResource, User> {
                 .first_name(user.getFirstName())
                 .last_name(user.getLastName())
                 .phone_number(user.getPhoneNumber())
-                .roles(user.getRoles())
-                .username(user.getUsername())
+                .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();
     }
 
-    public UserResource createUserResource(String username, String email, String first_name, String last_name, String phone_number, int customerId, Set<Role> roles, Date createdAt, Date updatedAt) {
+    public UserResource createUserResource(String email, String first_name, String last_name, String phone_number, int customerId, Role role, Date createdAt, Date updatedAt) {
         return UserResource.builder()
                 .customerId(customerId)
                 .email(email)
                 .first_name(first_name)
                 .last_name(last_name)
                 .phone_number(phone_number)
-                .roles(roles)
-                .username(username)
+                .role(role)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();

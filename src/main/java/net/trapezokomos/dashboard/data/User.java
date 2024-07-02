@@ -1,12 +1,13 @@
 package net.trapezokomos.dashboard.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Set;
+import java.util.Collection;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -23,18 +24,12 @@ import java.util.Set;
 @Setter
 @SuperBuilder
 @ToString
-public class User extends AbstractEntity {
-    @Column(
-            name = "username",
-            nullable = false
-    )
-    @NotEmpty(message = "Username is required.")
-    private String username;
-    @JsonIgnore
+public class User extends AbstractEntity implements UserDetails {
     @Column(
             name = "password",
             nullable = true
     )
+    @NotEmpty(message = "Password is required.")
     private String password;
     @Column(
             name = "email",
@@ -44,13 +39,13 @@ public class User extends AbstractEntity {
     private String email;
     @Column(
             name = "firstName",
-            nullable = false
+            nullable = true
     )
     @NotEmpty(message = "First name is required.")
     private String firstName;
     @Column(
             name = "lastName",
-            nullable = false
+            nullable = true
     )
     @NotEmpty(message = "Last name is required.")
     private String lastName;
@@ -60,16 +55,50 @@ public class User extends AbstractEntity {
     )
     private String phoneNumber;
     @Column(
-            name = "roles",
+            name = "role",
             nullable = false
     )
     @NotEmpty(message = "Roles are required.")
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private Role role;
     @Column(
             name = "customerid",
             nullable = true
     )
     private int customerId;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
 }

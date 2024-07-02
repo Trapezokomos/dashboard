@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.User;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.repository.UserRepository;
@@ -15,14 +16,11 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserService implements BaseService<UserResource> {
 
-    private final UserRepository repository;
     @Autowired private UserConverter userConverter;
-
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
+    private final UserRepository repository;
 
     @Override
     public Page<UserResource> list(Pageable pageable) {
@@ -42,13 +40,12 @@ public class UserService implements BaseService<UserResource> {
     public UserResource update(UserResource userResource, Long id) {
         User existingUser = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Could not find the user."));
-        existingUser.setUsername(userResource.getUsername());
         existingUser.setEmail(userResource.getEmail());
         existingUser.setFirstName(userResource.getFirst_name());
         existingUser.setLastName(userResource.getLast_name());
         existingUser.setPhoneNumber(userResource.getPhone_number());
         existingUser.setCustomerId(userResource.getCustomerId());
-        existingUser.setRoles(userResource.getRoles());
+        existingUser.setRole(userResource.getRole());
         existingUser.setUpdatedAt(new Date());
         return Optional.of(repository.save(existingUser)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the user."));
     }

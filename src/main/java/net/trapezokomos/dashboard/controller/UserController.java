@@ -40,15 +40,6 @@ public class UserController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity createUser(@RequestBody @Valid UserResource userResource) {
-        try {
-            return ResponseEntity.ok(userService.save(userResource));
-        } catch (Exception error) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
-        }
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity updateUser(
             @RequestParam(value = "id", required = true) Long id,
@@ -68,6 +59,15 @@ public class UserController {
         try {
             userService.delete(id);
             return ResponseEntity.ok().build();
+        } catch (Exception error) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
+        }
+    }
+
+    @PostMapping()
+    public ResponseEntity createUser(@RequestBody @Valid UserResource userResource) {
+        try {
+            return ResponseEntity.ok(userService.save(userResource));
         } catch (Exception error) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
