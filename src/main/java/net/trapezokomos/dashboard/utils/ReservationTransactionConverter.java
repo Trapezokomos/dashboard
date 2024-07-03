@@ -19,6 +19,7 @@ public class ReservationTransactionConverter implements AttributeConverter<Reser
                 .reservationId(reservationTransactionResource.getReservationId())
                 .createdAt(reservationTransactionResource.getCreatedAt())
                 .updatedAt(reservationTransactionResource.getUpdatedAt())
+                .version(reservationTransactionResource.getVersion())
                 .build();
     }
 
@@ -31,6 +32,7 @@ public class ReservationTransactionConverter implements AttributeConverter<Reser
                 .reservationId(reservationTransaction.getReservationId())
                 .createdAt(reservationTransaction.getCreatedAt())
                 .updatedAt(reservationTransaction.getUpdatedAt())
+                .version(reservationTransaction.getVersion())
                 .build();
     }
 
@@ -41,6 +43,7 @@ public class ReservationTransactionConverter implements AttributeConverter<Reser
                 .reservationId(reservationId)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
+                .version(1)
                 .build();
     }
 }

@@ -5,10 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import net.trapezokomos.dashboard.data.Role;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.resources.*;
+import net.trapezokomos.dashboard.security.services.AuthService;
 import net.trapezokomos.dashboard.service.*;
 import net.trapezokomos.dashboard.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,12 +22,13 @@ import java.util.List;
 @Slf4j
 public class DataInitializer implements CommandLineRunner {
 
-    private final UserService userService;
     private final CustomerService customerService;
     private final ConsumerService consumerService;
     private final ReservationTransactionService reservationTransactionService;
     private final ReservationService reservationService;
     private final PaymentService paymentService;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
 
     @Autowired private UserConverter userConverter;
     @Autowired private CustomerConverter customerConverter;
@@ -47,15 +50,14 @@ public class DataInitializer implements CommandLineRunner {
     private void createUsersData() {
         List<UserResource> list = new ArrayList<>(
                 List.of(
-                        userConverter.createUserResource( "admin@gmail.com", "Admin first name", "Admin last name", "2310456456", 0, Role.ADMIN, new Date(), new Date()),
-                        userConverter.createUserResource( "customer.admin@gmail.com", "Customer admin first name", "Customer admin last name", "2310159159", 1, Role.CUSTOMER_ADMIN, new Date(), new Date()),
-                        userConverter.createUserResource( "customer.employee@gmail.com", "Customer employee first name", "Customer employee last name", "2310123123", 1, Role.CUSTOMER_EMPLOYEE, new Date(), new Date()),
-                        userConverter.createUserResource("customer.employeeandadmin@gmail.com", "Customer employee and admin first name", "Customer employee and admin last name", "2310258258", 1, Role.CUSTOMER_EMPLOYEE, new Date(), new Date())
+                        userConverter.createUserResource( "admin@gmail.com", "Admin first name", "Admin last name", "2310456456", 0, Role.ADMIN, passwordEncoder.encode("password")),
+                        userConverter.createUserResource( "customer.admin@gmail.com", "Customer admin first name", "Customer admin last name", "2310159159", 1, Role.CUSTOMER_ADMIN, passwordEncoder.encode("password")),
+                        userConverter.createUserResource( "customer.employee@gmail.com", "Customer employee first name", "Customer employee last name", "2310123123", 1, Role.CUSTOMER_EMPLOYEE, passwordEncoder.encode("password"))
                 ));
         list.forEach(user -> {
             try {
-                userService.save(user);
-            } catch (GenericException e) {
+                authService.register(user);
+            } catch (Exception e) {
                 // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
                 e.printStackTrace();
             }
@@ -65,8 +67,8 @@ public class DataInitializer implements CommandLineRunner {
     private void createCustomersData() {
         List<CustomerResource> list = new ArrayList<>(
                 List.of(
-                        customerConverter.createCustomerResource("customer1", "2310567567", new Date(), new Date()),
-                        customerConverter.createCustomerResource("customer2", "2310890890", new Date(), new Date())
+                        customerConverter.createCustomerResource("customer1", "2310567567"),
+                        customerConverter.createCustomerResource("customer2", "2310890890")
                 )
         );
         list.forEach(customer -> {
@@ -81,8 +83,8 @@ public class DataInitializer implements CommandLineRunner {
     private void createConsumersData() {
         List<ConsumerResource> list = new ArrayList<>(
                 List.of(
-                        consumerConverter.createConsumerResource("consumer1", "passwordconsumer1", "Consumer1 First Name", "Consumer1 Last Name", "2310345345", "consumer1@gmail.com", new Date(), new Date()),
-                        consumerConverter.createConsumerResource("consumer2", "passwordconsumer2", "Consumer2 First Name", "Consumer2 Last Name", "2310890890", "consumer2@gmail.com", new Date(), new Date())
+                        consumerConverter.createConsumerResource("consumer1", "passwordconsumer1", "Consumer1 First Name", "Consumer1 Last Name", "2310345345", "consumer1@gmail.com"),
+                        consumerConverter.createConsumerResource("consumer2", "passwordconsumer2", "Consumer2 First Name", "Consumer2 Last Name", "2310890890", "consumer2@gmail.com")
                 )
         );
         list.forEach(consumer -> {

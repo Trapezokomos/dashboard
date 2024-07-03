@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.Consumer;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
@@ -15,14 +16,11 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ConsumerService implements BaseService<ConsumerResource> {
 
     private final ConsumerRepository repository;
     @Autowired private ConsumerConverter consumerConverter;
-
-    public ConsumerService(ConsumerRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public ConsumerResource save(ConsumerResource entity) throws GenericException {
@@ -30,6 +28,8 @@ public class ConsumerService implements BaseService<ConsumerResource> {
         if (repository.existsByEmail(consumer.getEmail())) {
             throw new GenericException();
         }
+        consumer.setCreatedAt(new Date());
+        consumer.setUpdatedAt(new Date());
         return Optional.of(repository.save(consumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the consumer."));
     }
 

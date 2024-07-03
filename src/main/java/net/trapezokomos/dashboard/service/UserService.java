@@ -34,6 +34,8 @@ public class UserService implements BaseService<UserResource> {
         if (repository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
             throw new GenericException();
         }
+        user.setCreatedAt(new Date());
+        user.setUpdatedAt(new Date());
         return Optional.of(repository.save(user)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the user."));
     }
 
@@ -42,9 +44,9 @@ public class UserService implements BaseService<UserResource> {
         User existingUser = repository.findById(id)
                 .orElseThrow(() -> new GenericRunTimeException("Could not find the user."));
         existingUser.setEmail(userResource.getEmail());
-        existingUser.setFirstName(userResource.getFirst_name());
-        existingUser.setLastName(userResource.getLast_name());
-        existingUser.setPhoneNumber(userResource.getPhone_number());
+        existingUser.setFirstName(userResource.getFirstName());
+        existingUser.setLastName(userResource.getLastName());
+        existingUser.setPhoneNumber(userResource.getPhoneNumber());
         existingUser.setCustomerId(userResource.getCustomerId());
         existingUser.setRole(userResource.getRole());
         existingUser.setUpdatedAt(new Date());

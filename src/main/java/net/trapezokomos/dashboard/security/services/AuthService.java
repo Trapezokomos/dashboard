@@ -9,10 +9,10 @@ import net.trapezokomos.dashboard.data.TokenType;
 import net.trapezokomos.dashboard.data.User;
 import net.trapezokomos.dashboard.repository.TokenRepository;
 import net.trapezokomos.dashboard.repository.UserRepository;
+import net.trapezokomos.dashboard.resources.UserResource;
 import net.trapezokomos.dashboard.security.resources.AuthenticationRequest;
 import net.trapezokomos.dashboard.security.resources.AuthenticationResponse;
 import net.trapezokomos.dashboard.security.resources.ChangePasswordRequest;
-import net.trapezokomos.dashboard.security.resources.RegisterRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
@@ -30,13 +31,17 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(UserResource request) {
         var user = User.builder()
-                .firstName(request.getFirstname())
-                .lastName(request.getLastname())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
+                .customerId(request.getCustomerId())
+                .phoneNumber(request.getPhoneNumber())
+                .createdAt(new Date())
+                .updatedAt(new Date())
                 .build();
         var savedUser = userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);

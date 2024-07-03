@@ -3,10 +3,10 @@ package net.trapezokomos.dashboard.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import net.trapezokomos.dashboard.resources.UserResource;
 import net.trapezokomos.dashboard.security.resources.AuthenticationRequest;
 import net.trapezokomos.dashboard.security.resources.AuthenticationResponse;
 import net.trapezokomos.dashboard.security.resources.ChangePasswordRequest;
-import net.trapezokomos.dashboard.security.resources.RegisterRequest;
 import net.trapezokomos.dashboard.security.services.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody UserResource request
     ) {
         return ResponseEntity.ok(authService.register(request));
     }

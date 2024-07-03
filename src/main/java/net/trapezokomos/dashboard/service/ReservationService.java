@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.Reservation;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
@@ -11,22 +12,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationService implements BaseService<ReservationResource> {
 
     private final ReservationRepository repository;
     @Autowired private ReservationConverter reservationConverter;
 
-    public ReservationService(ReservationRepository repository) {
-        this.repository = repository;
-    }
-
-
     @Override
     public ReservationResource save(ReservationResource entity) throws GenericException {
         Reservation reservation = reservationConverter.convertToDatabaseColumn(entity);
+        reservation.setCreatedAt(new Date());
+        reservation.setUpdatedAt(new Date());
         return Optional.of(repository.save(reservation)).map(reservationConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the reservation."));
     }
 
@@ -53,6 +53,7 @@ public class ReservationService implements BaseService<ReservationResource> {
         existingReservation.setEndTime(entity.getEndTime());
         existingReservation.setTotalPrice(entity.getTotalPrice());
         existingReservation.setStatus(entity.getStatus());
+        existingReservation.setUpdatedAt(new Date());
         return reservationConverter.convertToEntityAttribute(repository.save(existingReservation));
     }
 

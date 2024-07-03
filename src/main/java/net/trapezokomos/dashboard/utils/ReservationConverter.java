@@ -22,6 +22,7 @@ public class ReservationConverter implements AttributeConverter<ReservationResou
                 .totalPrice(reservationResource.getTotalPrice())
                 .createdAt(reservationResource.getCreatedAt())
                 .status(reservationResource.getStatus())
+                .version(reservationResource.getVersion())
                 .build();
     }
 
@@ -37,6 +38,7 @@ public class ReservationConverter implements AttributeConverter<ReservationResou
                 .totalPrice(reservation.getTotalPrice())
                 .createdAt(reservation.getCreatedAt())
                 .status(reservation.getStatus())
+                .version(reservation.getVersion())
                 .build();
     }
 
@@ -50,6 +52,7 @@ public class ReservationConverter implements AttributeConverter<ReservationResou
                 .totalPrice(totalPrice)
                 .createdAt(createdAt)
                 .status(status)
+                .version(1)
                 .build();
     }
 }

@@ -5,8 +5,6 @@ import net.trapezokomos.dashboard.data.Customer;
 import net.trapezokomos.dashboard.resources.CustomerResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
 public class CustomerConverter implements AttributeConverter<CustomerResource, Customer> {
 
@@ -18,6 +16,7 @@ public class CustomerConverter implements AttributeConverter<CustomerResource, C
                 .phoneNumber(customerResource.getPhoneNumber())
                 .createdAt(customerResource.getCreatedAt())
                 .updatedAt(customerResource.getUpdatedAt())
+                .version(customerResource.getVersion())
                 .build();
     }
 
@@ -29,15 +28,15 @@ public class CustomerConverter implements AttributeConverter<CustomerResource, C
                 .phoneNumber(customer.getPhoneNumber())
                 .createdAt(customer.getCreatedAt())
                 .updatedAt(customer.getUpdatedAt())
+                .version(customer.getVersion())
                 .build();
     }
 
-    public CustomerResource createCustomerResource(String name, String phoneNumber, Date createdAt, Date updatedAt) {
+    public CustomerResource createCustomerResource(String name, String phoneNumber) {
         return CustomerResource.builder()
                 .name(name)
                 .phoneNumber(phoneNumber)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .version(1)
                 .build();
     }
 }

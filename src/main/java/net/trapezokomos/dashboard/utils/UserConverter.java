@@ -1,28 +1,30 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Role;
 import net.trapezokomos.dashboard.data.User;
 import net.trapezokomos.dashboard.resources.UserResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class UserConverter implements AttributeConverter<UserResource, User> {
 
     @Override
     public User convertToDatabaseColumn(UserResource userResource) {
-        return (User) User.builder()
-                .firstName(userResource.getFirst_name())
-                .lastName(userResource.getLast_name())
+        return User.builder()
+                .firstName(userResource.getFirstName())
+                .lastName(userResource.getLastName())
                 .email(userResource.getEmail())
-                .phoneNumber(userResource.getPhone_number())
+                .phoneNumber(userResource.getPhoneNumber())
                 .role(userResource.getRole())
-                .id(userResource.getId())
                 .customerId(userResource.getCustomerId())
+                .password(userResource.getPassword())
+                .id(userResource.getId())
                 .createdAt(userResource.getCreatedAt())
                 .updatedAt(userResource.getUpdatedAt())
+                .version(userResource.getVersion())
                 .build();
     }
 
@@ -32,25 +34,27 @@ public class UserConverter implements AttributeConverter<UserResource, User> {
                 .id(user.getId())
                 .customerId(user.getCustomerId())
                 .email(user.getEmail())
-                .first_name(user.getFirstName())
-                .last_name(user.getLastName())
-                .phone_number(user.getPhoneNumber())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phoneNumber(user.getPhoneNumber())
+                .password(user.getPassword())
                 .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
+                .version(user.getVersion())
                 .build();
     }
 
-    public UserResource createUserResource(String email, String first_name, String last_name, String phone_number, int customerId, Role role, Date createdAt, Date updatedAt) {
+    public UserResource createUserResource(String email, String first_name, String last_name, String phone_number, int customerId, Role role, String password) {
         return UserResource.builder()
                 .customerId(customerId)
+                .password(password)
                 .email(email)
-                .first_name(first_name)
-                .last_name(last_name)
-                .phone_number(phone_number)
+                .firstName(first_name)
+                .lastName(last_name)
+                .phoneNumber(phone_number)
                 .role(role)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .version(1)
                 .build();
     }
 }

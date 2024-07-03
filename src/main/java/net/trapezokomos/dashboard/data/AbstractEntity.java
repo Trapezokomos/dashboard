@@ -11,10 +11,9 @@ import java.util.Date;
 @MappedSuperclass
 @Getter
 @Setter
-@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class AbstractEntity {
 
     @Id

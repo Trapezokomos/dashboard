@@ -1,8 +1,6 @@
 package net.trapezokomos.dashboard.resources;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import net.trapezokomos.dashboard.data.Role;
 
@@ -10,12 +8,14 @@ import net.trapezokomos.dashboard.data.Role;
 @Getter
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserResource extends BaseResource {
         private String email;
         private String password;
-        private String first_name;
-        private String last_name;
-        private String phone_number;
+        private String firstName;
+        private String lastName;
+        private String phoneNumber;
         private int customerId;
         private Role role;
 }

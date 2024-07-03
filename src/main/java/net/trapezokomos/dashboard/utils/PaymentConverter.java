@@ -20,6 +20,7 @@ public class PaymentConverter implements AttributeConverter<PaymentResource, Pay
                 .reservationConsumerId(paymentResource.getReservationConsumerId())
                 .createdAt(paymentResource.getCreatedAt())
                 .updatedAt(paymentResource.getUpdatedAt())
+                .version(paymentResource.getVersion())
                 .build();
     }
 
@@ -33,6 +34,7 @@ public class PaymentConverter implements AttributeConverter<PaymentResource, Pay
                 .reservationConsumerId(payment.getReservationConsumerId())
                 .createdAt(payment.getCreatedAt())
                 .updatedAt(payment.getUpdatedAt())
+                .version(payment.getVersion())
                 .build();
     }
 
@@ -44,6 +46,7 @@ public class PaymentConverter implements AttributeConverter<PaymentResource, Pay
                 .reservationConsumerId(reservationConsumerId)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
+                .version(1)
                 .build();
     }
 }
