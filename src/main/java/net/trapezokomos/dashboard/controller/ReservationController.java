@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.ReservationResource;
 import net.trapezokomos.dashboard.service.ReservationService;
 import org.springframework.data.domain.Page;
@@ -13,13 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/reservation")
 @Tag(name = "Reservation", description = "Basic operations for reservations.")
+@RequiredArgsConstructor
 public class ReservationController {
     
     private final ReservationService reservationService;
-    
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<Page<ReservationResource>> getReservations(

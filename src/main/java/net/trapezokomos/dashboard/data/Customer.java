@@ -22,7 +22,7 @@ public class Customer extends AbstractEntity {
     )
     private String name;
     @Column(
-            name = "phoneNumber",
+            name = "phone_number",
             nullable = false
     )
     private String phoneNumber;

@@ -18,17 +18,17 @@ import java.util.Date;
 @NoArgsConstructor
 @SuperBuilder
 public class Reservation extends AbstractEntity {
-    @Column(name = "consumerId", nullable = false)
+    @Column(name = "consumer_id", nullable = false)
     private Long consumerId;
-    @Column(name = "tableId", nullable = false)
+    @Column(name = "table_id", nullable = false)
     private Long tableId;
     @Column(name = "date", nullable = false)
     private Date date;
-    @Column(name = "startTime", nullable = false)
+    @Column(name = "start_time", nullable = false)
     private Date startTime;
-    @Column(name = "endTime", nullable = false)
+    @Column(name = "end_time", nullable = false)
     private Date endTime;
-    @Column(name = "totalPrice", nullable = false)
+    @Column(name = "total_price", nullable = false)
     private Double totalPrice;
     @Column(name = "status", nullable = false)
     private String status;

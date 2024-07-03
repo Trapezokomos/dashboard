@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import net.trapezokomos.dashboard.service.ConsumerService;
 import org.springframework.data.domain.Page;
@@ -13,14 +14,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/consumer")
 @Tag(name = "Consumer", description = "Basic operations for consumers.")
+@RequiredArgsConstructor
 //@PreAuthorize("hasRole('CUSTOMER')") // This is a security annotation, we can use it to secure our endpoints
 public class ConsumerController {
     
     private final ConsumerService consumerService;
-    
-    public ConsumerController(ConsumerService consumerService) {
-        this.consumerService = consumerService;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<Page<ConsumerResource>> getConsumers(

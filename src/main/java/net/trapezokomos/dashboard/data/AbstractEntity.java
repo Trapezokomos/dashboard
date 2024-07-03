@@ -24,12 +24,15 @@ public class AbstractEntity {
     private Long id;
 
     @Version
+    @Column(name = "version")
     private int version;
 
     @CreatedDate
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
     @LastModifiedDate
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     @Override

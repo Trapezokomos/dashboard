@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.ReservationTransactionResource;
 import net.trapezokomos.dashboard.service.ReservationTransactionService;
 import org.springframework.data.domain.Page;
@@ -13,13 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/reservation-transaction")
 @Tag(name = "Reservation Transaction", description = "Basic operations for reservation transactions.")
+@RequiredArgsConstructor
 public class ReservationTransactionController {
     
     private final ReservationTransactionService reservationTransactionService;
-    
-    public ReservationTransactionController(ReservationTransactionService reservationTransactionService) {
-        this.reservationTransactionService = reservationTransactionService;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<Page<ReservationTransactionResource>> getReservationTransactions(

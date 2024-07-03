@@ -20,6 +20,7 @@ public class UserConverter implements AttributeConverter<UserResource, User> {
                 .phoneNumber(userResource.getPhone_number())
                 .role(userResource.getRole())
                 .id(userResource.getId())
+                .customerId(userResource.getCustomerId())
                 .createdAt(userResource.getCreatedAt())
                 .updatedAt(userResource.getUpdatedAt())
                 .build();

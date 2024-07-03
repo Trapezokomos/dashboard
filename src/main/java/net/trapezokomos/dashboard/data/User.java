@@ -57,7 +57,7 @@ public class User extends AbstractEntity implements UserDetails {
     private String phoneNumber;
     @Column(
             name = "customer_id",
-            nullable = true
+            nullable = false
     )
     private int customerId;
     @Column(

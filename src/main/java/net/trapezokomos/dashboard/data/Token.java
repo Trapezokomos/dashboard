@@ -15,14 +15,25 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Token extends AbstractEntity {
 
-  @Column(unique = true)
+  @Column(
+    name = "token", unique = true
+  )
   public String token;
 
   @Enumerated(EnumType.STRING)
+  @Column(
+      name = "token_type", nullable = false
+  )
   public TokenType tokenType;
 
+  @Column(
+      name = "revoked", nullable = false
+  )
   public boolean revoked;
 
+  @Column(
+      name = "expired", nullable = false
+  )
   public boolean expired;
 
   @ManyToOne(fetch = FetchType.LAZY)
