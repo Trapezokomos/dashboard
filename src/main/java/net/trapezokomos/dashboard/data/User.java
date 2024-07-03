@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -15,7 +16,7 @@ import java.util.Collection;
         name = "users",
         uniqueConstraints = {
                 @UniqueConstraint(name = "user_email_unique", columnNames = "email"),
-                @UniqueConstraint(name = "user_phone_unique", columnNames = "phoneNumber"),
+                @UniqueConstraint(name = "user_phone_unique", columnNames = "phone_number"),
         }
 )
 @AllArgsConstructor
@@ -38,22 +39,27 @@ public class User extends AbstractEntity implements UserDetails {
     @NotEmpty(message = "Email is required.")
     private String email;
     @Column(
-            name = "firstName",
+            name = "first_name",
             nullable = true
     )
     @NotEmpty(message = "First name is required.")
     private String firstName;
     @Column(
-            name = "lastName",
+            name = "last_name",
             nullable = true
     )
     @NotEmpty(message = "Last name is required.")
     private String lastName;
     @Column(
-            name = "phoneNumber",
+            name = "phone_number",
             nullable = true
     )
     private String phoneNumber;
+    @Column(
+            name = "customer_id",
+            nullable = true
+    )
+    private int customerId;
     @Column(
             name = "role",
             nullable = false
@@ -61,11 +67,9 @@ public class User extends AbstractEntity implements UserDetails {
     @NotEmpty(message = "Roles are required.")
     @Enumerated(EnumType.STRING)
     private Role role;
-    @Column(
-            name = "customerid",
-            nullable = true
-    )
-    private int customerId;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

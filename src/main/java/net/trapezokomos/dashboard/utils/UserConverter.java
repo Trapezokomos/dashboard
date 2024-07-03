@@ -13,14 +13,13 @@ public class UserConverter implements AttributeConverter<UserResource, User> {
 
     @Override
     public User convertToDatabaseColumn(UserResource userResource) {
-        return User.builder()
-                .id(userResource.getId())
-                .customerId(userResource.getCustomerId())
-                .email(userResource.getEmail())
+        return (User) User.builder()
                 .firstName(userResource.getFirst_name())
                 .lastName(userResource.getLast_name())
+                .email(userResource.getEmail())
                 .phoneNumber(userResource.getPhone_number())
                 .role(userResource.getRole())
+                .id(userResource.getId())
                 .createdAt(userResource.getCreatedAt())
                 .updatedAt(userResource.getUpdatedAt())
                 .build();

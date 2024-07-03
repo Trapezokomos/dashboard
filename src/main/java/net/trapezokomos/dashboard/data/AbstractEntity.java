@@ -14,6 +14,7 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AbstractEntity {
 
     @Id

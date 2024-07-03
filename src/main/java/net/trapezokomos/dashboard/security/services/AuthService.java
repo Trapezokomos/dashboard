@@ -1,15 +1,18 @@
-package net.trapezokomos.dashboard.auth;
+package net.trapezokomos.dashboard.security.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import net.trapezokomos.dashboard.auth.token.Token;
-import net.trapezokomos.dashboard.auth.token.TokenRepository;
-import net.trapezokomos.dashboard.auth.token.TokenType;
+import net.trapezokomos.dashboard.data.Token;
+import net.trapezokomos.dashboard.data.TokenType;
 import net.trapezokomos.dashboard.data.User;
+import net.trapezokomos.dashboard.repository.TokenRepository;
 import net.trapezokomos.dashboard.repository.UserRepository;
-import net.trapezokomos.dashboard.security.JwtService;
+import net.trapezokomos.dashboard.security.resources.AuthenticationRequest;
+import net.trapezokomos.dashboard.security.resources.AuthenticationResponse;
+import net.trapezokomos.dashboard.security.resources.ChangePasswordRequest;
+import net.trapezokomos.dashboard.security.resources.RegisterRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,4 +1,4 @@
-package net.trapezokomos.dashboard.auth;
+package net.trapezokomos.dashboard.security.resources;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

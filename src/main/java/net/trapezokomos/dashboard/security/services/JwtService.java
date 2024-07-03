@@ -1,4 +1,4 @@
-package net.trapezokomos.dashboard.security;
+package net.trapezokomos.dashboard.security.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

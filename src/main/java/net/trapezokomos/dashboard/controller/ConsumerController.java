@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/consumer")
 @Tag(name = "Consumer", description = "Basic operations for consumers.")
+//@PreAuthorize("hasRole('CUSTOMER')") // This is a security annotation, we can use it to secure our endpoints
 public class ConsumerController {
     
     private final ConsumerService consumerService;

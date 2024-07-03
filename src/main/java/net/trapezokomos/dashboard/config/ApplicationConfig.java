@@ -1,4 +1,4 @@
-package net.trapezokomos.dashboard.security;
+package net.trapezokomos.dashboard.config;
 
 import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.repository.UserRepository;

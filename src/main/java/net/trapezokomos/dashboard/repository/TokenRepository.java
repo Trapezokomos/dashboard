@@ -1,5 +1,6 @@
-package net.trapezokomos.dashboard.auth.token;
+package net.trapezokomos.dashboard.repository;
 
+import net.trapezokomos.dashboard.data.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

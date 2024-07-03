@@ -44,6 +44,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(authorize ->
                     authorize.requestMatchers(WHITE_LIST_URLS)
                             .permitAll()
+//                            .requestMatchers("/api/v1/users").hasAnyRole("ADMIN") // This is how you can restrict access to certain endpoints
                             .anyRequest()
                             .authenticated()
             )

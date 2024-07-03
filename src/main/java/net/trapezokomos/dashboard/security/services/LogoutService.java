@@ -1,9 +1,8 @@
-package net.trapezokomos.dashboard.auth;
+package net.trapezokomos.dashboard.security.services;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import net.trapezokomos.dashboard.auth.token.TokenRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LogoutService implements LogoutHandler {
 
-  private final TokenRepository tokenRepository;
+  private final net.trapezokomos.dashboard.repository.TokenRepository tokenRepository;
 
   @Override
   public void logout(

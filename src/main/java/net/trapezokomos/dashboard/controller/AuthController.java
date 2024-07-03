@@ -1,8 +1,13 @@
-package net.trapezokomos.dashboard.auth;
+package net.trapezokomos.dashboard.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import net.trapezokomos.dashboard.security.resources.AuthenticationRequest;
+import net.trapezokomos.dashboard.security.resources.AuthenticationResponse;
+import net.trapezokomos.dashboard.security.resources.ChangePasswordRequest;
+import net.trapezokomos.dashboard.security.resources.RegisterRequest;
+import net.trapezokomos.dashboard.security.services.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +26,7 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(authService.register(request));
     }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
@@ -43,6 +49,4 @@ public class AuthController {
         authService.changePassword(request);
         return ResponseEntity.ok().build();
     }
-
-
 }
