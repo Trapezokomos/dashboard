@@ -4,7 +4,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
-
 @EqualsAndHashCode
 @Getter
 @Setter

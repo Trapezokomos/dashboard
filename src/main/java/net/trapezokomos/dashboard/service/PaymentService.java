@@ -25,6 +25,7 @@ public class PaymentService implements BaseService<PaymentResource> {
     @Override
     public PaymentResource save(PaymentResource entity) throws GenericException {
         Payment payment = paymentConverter.convertToDatabaseColumn(entity);
+        return Optional.of(repository.save(payment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the payment."));
         payment.setCreatedAt(new Date());
         payment.setUpdatedAt(new Date());
         return Optional.of(repository.save(payment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the payment."));
@@ -50,6 +51,7 @@ public class PaymentService implements BaseService<PaymentResource> {
         existingPayment.setDate(entity.getDate());
         existingPayment.setStatus(entity.getStatus());
         existingPayment.setReservationConsumerId(entity.getReservationConsumerId());
+        return Optional.of(repository.save(existingPayment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the payment."));
         existingPayment.setUpdatedAt(new Date());
         return Optional.of(repository.save(existingPayment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the payment."));
     }

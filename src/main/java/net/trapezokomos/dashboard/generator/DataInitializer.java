@@ -13,15 +13,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class DataInitializer implements CommandLineRunner {
 
+    private final UserService userService;
     private final CustomerService customerService;
     private final ConsumerService consumerService;
     private final ReservationTransactionService reservationTransactionService;
@@ -29,6 +32,14 @@ public class DataInitializer implements CommandLineRunner {
     private final PaymentService paymentService;
     private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
+    private final StoreService storeService;
+    private final AttributeService attributeService;
+    private final BillingDetailsService billingDetailsService;
+    private final MenuService menuService;
+    private final TablesService tablesService;
+    private final StoreDayHourService storeDayHourService;
+//    private final ImageService imageService;
+    private final FeedbackService feedbackService;
 
     @Autowired private UserConverter userConverter;
     @Autowired private CustomerConverter customerConverter;
@@ -36,6 +47,14 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired private ReservationTransactionConverter reservationTransactionConverter;
     @Autowired private ReservationConverter reservationConverter;
     @Autowired private PaymentConverter paymentConverter;
+    @Autowired private StoreConverter storeConverter;
+    @Autowired private AttributesConverter attributesConverter;
+    @Autowired private BillingDetailsConverter billingDetailsConverter;
+    @Autowired private MenuConverter menuConverter;
+    @Autowired private TablesConverter tablesConverter;
+    @Autowired private StoreDayHourConverter storeDayHourConverter;
+//    @Autowired private ImageConverter imageConverter;
+    @Autowired private FeedbackConverter feedbackConverter;
 
     @Override
     public void run(String... args) {
@@ -45,6 +64,14 @@ public class DataInitializer implements CommandLineRunner {
         createReservationTransactionsData();
         createReservationsData();
         createPaymentsData();
+        createStoreData();
+        createAttributeData();
+        createBillingDetailsData();
+        createMenuData();
+        createTablesData();
+        createStoreDayHourData();
+//        createImageData();
+        createFeedbackData();
     }
 
     private void createUsersData() {
@@ -147,4 +174,141 @@ public class DataInitializer implements CommandLineRunner {
             }
         });
     }
+
+    private void createStoreData() {
+        ArrayList<StoreResource> list = new ArrayList<>(
+                List.of(
+                        storeConverter.createStoreResource("Store1", "Store1 Address", "Store1 Description", "10:00-12:00", 1, new Date(), new Date()),
+                        storeConverter.createStoreResource("Store2", "Store2 Address", "Store2 Description", "12:00-14:00", 2, new Date(), new Date())
+                )
+        );
+        list.forEach(store -> {
+            try {
+                storeService.save(store);
+            } catch (GenericException e) {
+                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void createAttributeData() {
+      ArrayList<AttributeResource> list = new ArrayList<>(
+              List.of(
+                      attributesConverter.createAttributeResource("Attribute1", "Attribute1 Description", 1, new Date(), new Date()),
+                      attributesConverter.createAttributeResource("Attribute2", "Attribute2 Description", 2, new Date(), new Date())
+              )
+      );
+        list.forEach(attribute -> {
+            try {
+                attributeService.save(attribute);
+            } catch (GenericException e) {
+                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+                e.printStackTrace();
+            }
+        });
+
+    }
+
+    private void createBillingDetailsData() {
+        ArrayList<BillingDetailsResource> list = new ArrayList<>(
+                List.of(
+                        billingDetailsConverter.createBillingDetailsResource(1,  new Date(), new Date()),
+                        billingDetailsConverter.createBillingDetailsResource(2, new Date(), new Date())
+                )
+        );
+        list.forEach(billingDetails -> {
+            try {
+                billingDetailsService.save(billingDetails);
+            } catch (GenericException e) {
+                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void createMenuData() {
+        ArrayList<MenuResource> list = new ArrayList<>(
+                List.of(
+                        menuConverter.createMenuResource("Menu1", 1,  new Date(), new Date()),
+                        menuConverter.createMenuResource("Menu2", 2, new Date(), new Date())
+                )
+        );
+        list.forEach(menu -> {
+            try {
+                menuService.save(menu);
+            } catch (GenericException e) {
+                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void createTablesData() {
+        ArrayList<TablesResource> list = new ArrayList<>(
+                List.of(
+                        tablesConverter.createTablesResource("Table1", "Table1", 1, 4, "Table", true, new Date(), new Date()),
+                        tablesConverter.createTablesResource("Table2", "table2", 2, 6, "Table", true, new Date(), new Date())
+                )
+        );
+        list.forEach(tables -> {
+            try {
+                tablesService.save(tables);
+            } catch (GenericException e) {
+                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void createStoreDayHourData() {
+        ArrayList<StoreDayHourResource> list = new ArrayList<>(
+                List.of(
+                        storeDayHourConverter.createStoreDayHourResource(1, 1, "monday","Friday",true, new Date(), new Date()),
+                        storeDayHourConverter.createStoreDayHourResource(2, 2, "friday","Monday",false, new Date(), new Date())
+                )
+        );
+        list.forEach(storeDayHour -> {
+            try {
+                storeDayHourService.save(storeDayHour);
+            } catch (GenericException e) {
+                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+                e.printStackTrace();
+            }
+        });
+    }
+
+//    private void createImageData() {
+//        ArrayList<ImageResource> list = new ArrayList<>(
+//                List.of(
+////                        imageConverter.createImageResource("Image1", "Image1 Description", 1  ,"http.test.gr",1, new Date(), new Date()),
+////                        imageConverter.createImageResource("Image2", "Image2 Description",  "http.test.gr",2, new Date(), new Date())
+//                )
+//        );
+//        list.forEach(image -> {
+//            try {
+//                imageService.save(image);
+//            } catch (GenericException e) {
+//                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+//                e.printStackTrace();
+//            }
+//        });
+//    }
+    private void createFeedbackData() {
+        ArrayList<FeedbackResource> list = new ArrayList<>(
+                List.of(
+                        feedbackConverter.createFeedbackResource(1, 1, 1, "test", new Date(), new Date()),
+                        feedbackConverter.createFeedbackResource(2, 1, 2, "test2", new Date(), new Date())
+                )
+        );
+        list.forEach(feedback -> {
+            try {
+                feedbackService.save(feedback);
+            } catch (GenericException e) {
+                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+                e.printStackTrace();
+            }
+        });
+    }
+
 }

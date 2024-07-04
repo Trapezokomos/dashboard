@@ -1,18 +1,18 @@
 package net.trapezokomos.dashboard.resources;
 
+
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerResource extends BaseResource {
+@EqualsAndHashCode(callSuper = true)
+public class AttributeResource extends  BaseResource{
     private String name;
-    private String phoneNumber;
+    private String description;
+    private String type;
+    private int store_Id;
 }

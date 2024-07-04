@@ -22,6 +22,11 @@ public class CustomerService implements BaseService<CustomerResource> {
     private final CustomerRepository repository;
     @Autowired private CustomerConverter customerConverter;
 
+    public CustomerService(CustomerRepository repository) {
+        this.repository = repository;
+    }
+
+
     @Override
     public CustomerResource save(CustomerResource entity) throws GenericException {
         Customer customer = customerConverter.convertToDatabaseColumn(entity);
