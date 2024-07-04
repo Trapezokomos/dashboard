@@ -1,6 +1,7 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Reservation;
 import net.trapezokomos.dashboard.resources.ReservationResource;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
+@Converter
 public class ReservationConverter implements AttributeConverter<ReservationResource, Reservation> {
 
     @Override
@@ -42,7 +44,7 @@ public class ReservationConverter implements AttributeConverter<ReservationResou
                 .build();
     }
 
-    public ReservationResource createReservation(Long consumerId, Long tableId, Date startTime, Date endTime, Date date, Double totalPrice, Date createdAt, String status) {
+    public ReservationResource createReservation(Long consumerId, Long tableId, Date startTime, Date endTime, Date date, Double totalPrice, String status) {
         return ReservationResource.builder()
                 .consumerId(consumerId)
                 .tableId(tableId)
@@ -50,9 +52,7 @@ public class ReservationConverter implements AttributeConverter<ReservationResou
                 .endTime(endTime)
                 .date(date)
                 .totalPrice(totalPrice)
-                .createdAt(createdAt)
                 .status(status)
-                .version(1)
                 .build();
     }
 }

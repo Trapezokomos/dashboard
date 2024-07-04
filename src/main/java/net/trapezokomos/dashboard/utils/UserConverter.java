@@ -54,7 +54,6 @@ public class UserConverter implements AttributeConverter<UserResource, User> {
                 .lastName(last_name)
                 .phoneNumber(phone_number)
                 .role(role)
-                .version(1)
                 .build();
     }
 }

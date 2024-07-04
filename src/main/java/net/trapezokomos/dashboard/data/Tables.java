@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Tables  extends AbstractEntity{
+public class Tables extends AbstractEntity {
     @Column(
             name = "name",
             nullable = false
@@ -26,25 +26,21 @@ public class Tables  extends AbstractEntity{
             nullable = false
     )
     private String description;
-
     @Column(
             name = "store_id",
             nullable = false
     )
-    private int store_id;
-
+    private int storeId;
     @Column(
             name = "capacity",
             nullable = false
     )
     private int capacity;
-
     @Column(
             name = "type",
             nullable = false
     )
     private String type;
-
     @Column(
             name = "availability",
             nullable = false

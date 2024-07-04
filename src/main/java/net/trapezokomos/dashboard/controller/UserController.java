@@ -71,10 +71,11 @@ public class UserController {
         }
     }
 
+    // Search operation for future usage.
     //    @GetMapping("/search")
-//    public ResponseEntity<List<UserResource>> searchUser(
-//            @RequestParam(value = "filterText", required = true) String filterText
-//    ) {
-//        return ResponseEntity.ok(userService.search(filterText));
-//    }
+    //    public ResponseEntity<List<UserResource>> searchUser(
+    //            @RequestParam(value = "filterText", required = true) String filterText
+    //    ) {
+    //        return ResponseEntity.ok(userService.search(filterText));
+    //    }
 }

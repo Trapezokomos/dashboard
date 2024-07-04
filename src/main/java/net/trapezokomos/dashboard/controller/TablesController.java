@@ -1,6 +1,7 @@
 package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.TablesResource;
 import net.trapezokomos.dashboard.service.TablesService;
 import org.springframework.data.domain.Page;
@@ -11,12 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/tables")
 @Tag(name = "Tables", description = "Basic operations for tables.")
+@RequiredArgsConstructor
 public class TablesController {
-    private final TablesService tablesService;
 
-    public TablesController(TablesService tablesService) {
-        this.tablesService = tablesService;
-    }
+    private final TablesService tablesService;
 
     @GetMapping("/all")
     public ResponseEntity<Page<TablesResource>> getTables(

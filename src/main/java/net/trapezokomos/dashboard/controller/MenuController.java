@@ -1,6 +1,7 @@
 package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.MenuResource;
 import net.trapezokomos.dashboard.service.MenuService;
 import org.springframework.data.domain.Page;
@@ -11,12 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/menu")
 @Tag(name = "Menu", description = "Basic operations for menus.")
+@RequiredArgsConstructor
 public class MenuController {
-    private final MenuService menuService;
 
-    public MenuController(MenuService menuService) {
-        this.menuService = menuService;
-    }
+    private final MenuService menuService;
 
     @GetMapping("/all")
     public ResponseEntity<Page<MenuResource>> getMenus(

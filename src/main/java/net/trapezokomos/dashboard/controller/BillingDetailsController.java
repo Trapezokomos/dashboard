@@ -1,6 +1,7 @@
 package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.BillingDetailsResource;
 import net.trapezokomos.dashboard.service.BillingDetailsService;
 import org.springframework.data.domain.Page;
@@ -12,12 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/billing-details")
 @Tag(name = "Billing Details", description = "Basic operations for billing details.")
-public class BillingDetailsControler {
-    private final BillingDetailsService billingDetailsService;
+@RequiredArgsConstructor
+public class BillingDetailsController {
 
-    public BillingDetailsControler(BillingDetailsService billingDetailsService) {
-        this.billingDetailsService = billingDetailsService;
-    }
+    private final BillingDetailsService billingDetailsService;
 
     @GetMapping("/all")
     public ResponseEntity<Page<BillingDetailsResource>> getBillingDetails(

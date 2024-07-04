@@ -1,13 +1,13 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Tables;
 import net.trapezokomos.dashboard.resources.TablesResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class TablesConverter implements AttributeConverter<TablesResource, Tables> {
 
     @Override
@@ -16,7 +16,7 @@ public class TablesConverter implements AttributeConverter<TablesResource, Table
                 .id(tablesResource.getId())
                 .name(tablesResource.getName())
                 .description(tablesResource.getDescription())
-                .store_id(tablesResource.getStore_id())
+                .storeId(tablesResource.getStoreId())
                 .capacity(tablesResource.getCapacity())
                 .type(tablesResource.getType())
                 .availability(tablesResource.isAvailability())
@@ -31,7 +31,7 @@ public class TablesConverter implements AttributeConverter<TablesResource, Table
                 .id(tables.getId())
                 .name(tables.getName())
                 .description(tables.getDescription())
-                .store_id(tables.getStore_id())
+                .storeId(tables.getStoreId())
                 .capacity(tables.getCapacity())
                 .type(tables.getType())
                 .availability(tables.isAvailability())
@@ -40,16 +40,14 @@ public class TablesConverter implements AttributeConverter<TablesResource, Table
                 .build();
     }
 
-    public TablesResource createTablesResource(String name, String description, int store_id, int capacity, String type, boolean availability, Date createdAt, Date updatedAt) {
+    public TablesResource createTablesResource(String name, String description, int storeId, int capacity, String type, boolean availability) {
         return TablesResource.builder()
                 .name(name)
                 .description(description)
-                .store_id(store_id)
+                .storeId(storeId)
                 .capacity(capacity)
                 .type(type)
                 .availability(availability)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
                 .build();
     }
 }

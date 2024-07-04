@@ -2,37 +2,36 @@ package net.trapezokomos.dashboard.utils;
 
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.BillingDetails;
 import net.trapezokomos.dashboard.resources.BillingDetailsResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class BillingDetailsConverter implements AttributeConverter<BillingDetailsResource, BillingDetails> {
 
     @Override
     public BillingDetails convertToDatabaseColumn(BillingDetailsResource billingDetailsResource) {
         return BillingDetails.builder()
-                .store_id(billingDetailsResource.getStore_id())
+                .storeId(billingDetailsResource.getStoreId())
                 .createdAt(billingDetailsResource.getCreatedAt())
                 .updatedAt(billingDetailsResource.getUpdatedAt())
                 .build();
     }
+
     @Override
     public BillingDetailsResource convertToEntityAttribute(BillingDetails billingDetails) {
         return BillingDetailsResource.builder()
-                .store_id(billingDetails.getStore_id())
+                .storeId(billingDetails.getStoreId())
                 .createdAt(billingDetails.getCreatedAt())
                 .updatedAt(billingDetails.getUpdatedAt())
                 .build();
     }
 
-    public BillingDetailsResource createBillingDetailsResource(int store_id, Date createdAt, Date updatedAt) {
+    public BillingDetailsResource createBillingDetailsResource(int store_id) {
         return BillingDetailsResource.builder()
-                .store_id(store_id)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .storeId(store_id)
                 .build();
     }
 

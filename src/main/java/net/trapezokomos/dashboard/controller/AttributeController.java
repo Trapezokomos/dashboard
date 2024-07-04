@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.AttributeResource;
 import net.trapezokomos.dashboard.service.AttributeService;
 import org.springframework.data.domain.Page;
@@ -13,12 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/attribute")
 @Tag(name = "Attribute", description = "Basic operations for attributes.")
+@RequiredArgsConstructor
 public class AttributeController {
-    private final AttributeService attributeService;
 
-    public AttributeController(AttributeService attributeService) {
-        this.attributeService = attributeService;
-    }
+    private final AttributeService attributeService;
 
     @GetMapping("/all")
     public ResponseEntity<Page<AttributeResource>> getAttributes(

@@ -25,7 +25,6 @@ public class ReservationService implements BaseService<ReservationResource> {
     @Override
     public ReservationResource save(ReservationResource entity) throws GenericException {
         Reservation reservation = reservationConverter.convertToDatabaseColumn(entity);
-        return Optional.of(repository.save(reservation)).map(reservationConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the reservation."));
         reservation.setCreatedAt(new Date());
         reservation.setUpdatedAt(new Date());
         return Optional.of(repository.save(reservation)).map(reservationConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the reservation."));

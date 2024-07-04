@@ -20,7 +20,8 @@ import java.util.Optional;
 public class ConsumerService implements BaseService<ConsumerResource> {
 
     private final ConsumerRepository repository;
-    @Autowired private ConsumerConverter consumerConverter;
+    @Autowired
+    private ConsumerConverter consumerConverter;
 
     @Override
     public ConsumerResource save(ConsumerResource entity) throws GenericException {

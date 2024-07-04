@@ -4,18 +4,18 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import net.trapezokomos.dashboard.data.Role;
 
-@Setter
 @Getter
+@Setter
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class UserResource extends BaseResource {
-        private String email;
-        private String password;
-        private String firstName;
-        private String lastName;
-        private String phoneNumber;
-        private int customerId;
-        private Role role;
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private int customerId;
+    private Role role;
 }

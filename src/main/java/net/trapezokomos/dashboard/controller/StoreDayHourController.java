@@ -1,6 +1,7 @@
 package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.StoreDayHourResource;
 import net.trapezokomos.dashboard.service.StoreDayHourService;
 import org.springframework.data.domain.Page;
@@ -11,12 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/store-day-hour")
 @Tag(name = "StoreDayHour", description = "Basic operations for store day hour.")
+@RequiredArgsConstructor
 public class StoreDayHourController {
-    private final StoreDayHourService storeDayHourService;
 
-    public StoreDayHourController(StoreDayHourService storeDayHourService) {
-        this.storeDayHourService = storeDayHourService;
-    }
+    private final StoreDayHourService storeDayHourService;
 
     @GetMapping("/all")
     public ResponseEntity<Page<StoreDayHourResource>> getStoreDayHours(

@@ -16,7 +16,6 @@ import org.hibernate.annotations.OnDeleteAction;
 @ToString
 @SuperBuilder
 public class Token extends AbstractEntity {
-
   @Column(
     name = "token", unique = true
   )

@@ -4,14 +4,12 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class CustomerResource extends BaseResource {
     private String name;
     private String phoneNumber;

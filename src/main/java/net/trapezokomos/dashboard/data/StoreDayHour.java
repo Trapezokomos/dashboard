@@ -15,33 +15,30 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class StoreDayHour  extends AbstractEntity{
+public class StoreDayHour extends AbstractEntity {
     @Column(
             name = "store_id",
             nullable = false
     )
-    private int store_id;
+    private int storeId;
     @Column(
             name = "dayofweek",
             nullable = false
     )
-    private int dayofweek;
-
+    private int dayOfWeek;
     @Column(
             name = "start_time",
             nullable = false
     )
-    private String start_time;
-
+    private String startTime;
     @Column(
             name = "end_time",
             nullable = false
     )
-    private String end_time;
-
+    private String endTime;
     @Column(
-            name = "cloded",
+            name = "is_closed",
             nullable = false
     )
-    private boolean cloded;
+    private boolean isClosed;
 }

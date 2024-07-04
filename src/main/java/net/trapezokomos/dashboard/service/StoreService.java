@@ -1,5 +1,6 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.Store;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
@@ -15,14 +16,12 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
-public class StoreService  implements BaseService<StoreResource> {
+@RequiredArgsConstructor
+public class StoreService implements BaseService<StoreResource> {
 
     private final StoreRepository repository;
-    @Autowired private StoreConverter storeConverter;
-
-    public StoreService(StoreRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private StoreConverter storeConverter;
 
     @Override
     public StoreResource save(StoreResource entity) throws GenericException {
@@ -30,6 +29,8 @@ public class StoreService  implements BaseService<StoreResource> {
         if (repository.existsByName(store.getName())) {
             throw new GenericException();
         }
+        store.setCreatedAt(new Date());
+        store.setUpdatedAt(new Date());
         return Optional.of(repository.save(store)).map(storeConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the store."));
     }
 
@@ -57,6 +58,9 @@ public class StoreService  implements BaseService<StoreResource> {
                 .orElseThrow(() -> new GenericRunTimeException("Could not find the store."));
         existingStore.setName(entity.getName());
         existingStore.setAddress(entity.getAddress());
+        existingStore.setDescription(entity.getDescription());
+        existingStore.setSlotTimeAvailable(entity.getSlotTimeAvailable());
+        existingStore.setCustomerId(entity.getCustomerId());
         existingStore.setUpdatedAt(new Date());
         return Optional.of(repository.save(existingStore)).map(storeConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the store."));
     }

@@ -20,12 +20,8 @@ import java.util.Optional;
 public class CustomerService implements BaseService<CustomerResource> {
 
     private final CustomerRepository repository;
-    @Autowired private CustomerConverter customerConverter;
-
-    public CustomerService(CustomerRepository repository) {
-        this.repository = repository;
-    }
-
+    @Autowired
+    private CustomerConverter customerConverter;
 
     @Override
     public CustomerResource save(CustomerResource entity) throws GenericException {

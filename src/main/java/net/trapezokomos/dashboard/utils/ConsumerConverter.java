@@ -1,11 +1,13 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Consumer;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import org.springframework.stereotype.Component;
 
 @Component
+@Converter
 public class ConsumerConverter implements AttributeConverter<ConsumerResource, Consumer> {
 
     @Override
@@ -48,7 +50,6 @@ public class ConsumerConverter implements AttributeConverter<ConsumerResource, C
                 .phoneNumber(phoneNumber)
                 .username(username)
                 .password(password)
-                .version(1)
                 .build();
     }
 }

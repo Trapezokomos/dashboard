@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.resources.StoreResource;
 import net.trapezokomos.dashboard.service.StoreService;
 import org.springframework.data.domain.Page;
@@ -13,12 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/store")
 @Tag(name = "Store", description = "Basic operations for stores.")
+@RequiredArgsConstructor
 public class StoreController {
-    private final StoreService storeService;
 
-    public StoreController(StoreService storeService) {
-        this.storeService = storeService;
-    }
+    private final StoreService storeService;
 
     @GetMapping("/all")
     public ResponseEntity<Page<StoreResource>> getStores(

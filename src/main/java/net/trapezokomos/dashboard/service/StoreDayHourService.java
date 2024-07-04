@@ -1,6 +1,7 @@
 package net.trapezokomos.dashboard.service;
 
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.StoreDayHour;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
@@ -12,20 +13,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class StoreDayHourService implements BaseService<StoreDayHourResource> {
+
     private final StoreDayHourRepository repository;
     @Autowired private StoreDayHourConverter storeDayHourConverter;
-
-    public StoreDayHourService(StoreDayHourRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public StoreDayHourResource save(StoreDayHourResource entity) throws GenericException {
         StoreDayHour storeDayHour = storeDayHourConverter.convertToDatabaseColumn(entity);
+        storeDayHour.setCreatedAt(new Date());
+        storeDayHour.setUpdatedAt(new Date());
         return Optional.of(repository.save(storeDayHour)).map(storeDayHourConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the store day hour."));
     }
 
@@ -48,14 +50,14 @@ public class StoreDayHourService implements BaseService<StoreDayHourResource> {
     }
 
     @Override
-    public StoreDayHourResource update(StoreDayHourResource entity, Long id) {
+    public StoreDayHourResource update(StoreDayHourResource storeDayHourResource, Long id) {
         StoreDayHour existingStoreDayHour = repository.findById(id)
                 .orElseThrow(() -> new GenericRunTimeException("Could not find the store day hour."));
-        existingStoreDayHour.setStore_id(entity.getStore_id());
-        existingStoreDayHour.setDayofweek(entity.getDayofweek());
-        existingStoreDayHour.setStart_time(entity.getStart_time());
-        existingStoreDayHour.setEnd_time(entity.getEnd_time());
-        existingStoreDayHour.setCloded(entity.isCloded());
+        existingStoreDayHour.setStoreId(storeDayHourResource.getStoreId());
+        existingStoreDayHour.setDayOfWeek(storeDayHourResource.getDayOfWeek());
+        existingStoreDayHour.setStartTime(storeDayHourResource.getStartTime());
+        existingStoreDayHour.setEndTime(storeDayHourResource.getEndTime());
+//        existingStoreDayHour.set(storeDayHourResource.getIsClosed());
         return storeDayHourConverter.convertToEntityAttribute(repository.save(existingStoreDayHour));
     }
 }

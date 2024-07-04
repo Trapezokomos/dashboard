@@ -3,14 +3,12 @@ package net.trapezokomos.dashboard.resources;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class ConsumerResource extends BaseResource {
     private String username;
     private String password;
