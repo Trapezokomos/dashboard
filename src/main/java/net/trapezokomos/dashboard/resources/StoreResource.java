@@ -1,11 +1,11 @@
 package net.trapezokomos.dashboard.resources;
 
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
@@ -13,6 +13,9 @@ import lombok.experimental.SuperBuilder;
 public class StoreResource extends BaseResource{
     private String name;
     private String address;
+    private String description;
+    private String slottimeavailable;
+    private int customer_id;
 
 
 }

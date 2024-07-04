@@ -28,4 +28,22 @@ public class Store  extends  AbstractEntity{
     )
     private String address;
 
+    @Column(
+            name = "description",
+            nullable = false
+    )
+    private String description;
+
+    @Column(
+            name = "slottimeavailable",
+            nullable = false
+    )
+    private String slottimeavailable;
+
+    @Column(
+            name = "customer_id",
+            nullable = false
+    )
+    private int customer_id;
+
 }

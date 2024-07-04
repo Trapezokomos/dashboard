@@ -1,13 +1,13 @@
 package net.trapezokomos.dashboard.resources;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import net.trapezokomos.dashboard.data.Role;
 
 import java.util.Set;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @SuperBuilder

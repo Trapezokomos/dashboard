@@ -16,9 +16,13 @@ public class StoreConverter implements AttributeConverter<StoreResource, Store> 
                 .id(storeResource.getId())
                 .name(storeResource.getName())
                 .address(storeResource.getAddress())
+                .description(storeResource.getDescription())
+                .slottimeavailable(storeResource.getSlottimeavailable())
+                .customer_id(storeResource.getCustomer_id())
                 .createdAt(storeResource.getCreatedAt())
                 .updatedAt(storeResource.getUpdatedAt())
                 .build();
+
     }
 
     @Override
@@ -27,15 +31,21 @@ public class StoreConverter implements AttributeConverter<StoreResource, Store> 
                 .id(store.getId())
                 .name(store.getName())
                 .address(store.getAddress())
+                .description(store.getDescription())
+                .slottimeavailable(store.getSlottimeavailable())
+                .customer_id(store.getCustomer_id())
                 .createdAt(store.getCreatedAt())
                 .updatedAt(store.getUpdatedAt())
                 .build();
     }
 
-    public StoreResource createStoreResource(String name, String address, Date createdAt, Date updatedAt) {
+    public StoreResource createStoreResource(String name, String address, String description, String slottimeavailable, int customer_id, Date createdAt, Date updatedAt) {
         return StoreResource.builder()
                 .name(name)
                 .address(address)
+                .description(description)
+                .slottimeavailable(slottimeavailable)
+                .customer_id(customer_id)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();
