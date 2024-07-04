@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.Consumer;
 import net.trapezokomos.dashboard.exception.GenericException;
+import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.ConsumerRepository;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import net.trapezokomos.dashboard.utils.ConsumerConverter;
@@ -29,13 +30,13 @@ public class ConsumerService implements BaseService<ConsumerResource> {
         if (repository.existsByEmail(consumer.getEmail())) {
             throw new GenericException();
         }
-        return Optional.of(repository.save(consumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the consumer."));
+        return Optional.of(repository.save(consumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the consumer."));
     }
 
     @Override
     public void delete(Long T) {
         Consumer existingConsumer = repository.findById(T)
-                .orElseThrow(() -> new RuntimeException("Could not find the consumer."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the consumer."));
         repository.delete(existingConsumer);
     }
 
@@ -47,7 +48,7 @@ public class ConsumerService implements BaseService<ConsumerResource> {
     @Override
     public ConsumerResource update(ConsumerResource entity, Long T) {
         Consumer existingConsumer = repository.findById(T)
-                .orElseThrow(() -> new RuntimeException("Could not find the consumer."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the consumer."));
         existingConsumer.setUsername(entity.getUsername());
         existingConsumer.setPassword(entity.getPassword());
         existingConsumer.setFirstName(entity.getFirstName());
@@ -55,13 +56,13 @@ public class ConsumerService implements BaseService<ConsumerResource> {
         existingConsumer.setEmail(entity.getEmail());
         existingConsumer.setPhoneNumber(entity.getPhoneNumber());
         existingConsumer.setUpdatedAt(new Date());
-        return Optional.of(repository.save(existingConsumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the consumer."));
+        return Optional.of(repository.save(existingConsumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the consumer."));
     }
 
     @Override
     public ConsumerResource get(Long T) {
         return repository.findById(T)
                 .map(consumerConverter::convertToEntityAttribute)
-                .orElseThrow(() -> new RuntimeException("Could not find the consumer."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the consumer."));
     }
 }

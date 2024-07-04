@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.Reservation;
 import net.trapezokomos.dashboard.exception.GenericException;
+import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.ReservationRepository;
 import net.trapezokomos.dashboard.resources.ReservationResource;
 import net.trapezokomos.dashboard.utils.ReservationConverter;
@@ -26,13 +27,13 @@ public class ReservationService implements BaseService<ReservationResource> {
     @Override
     public ReservationResource save(ReservationResource entity) throws GenericException {
         Reservation reservation = reservationConverter.convertToDatabaseColumn(entity);
-        return Optional.of(repository.save(reservation)).map(reservationConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the reservation."));
+        return Optional.of(repository.save(reservation)).map(reservationConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the reservation."));
     }
 
     @Override
     public void delete(Long T) {
         Reservation existingReservation = repository.findById(T)
-                .orElseThrow(() -> new RuntimeException("Could not find the reservation."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the reservation."));
         repository.delete(existingReservation);
     }
 
@@ -44,7 +45,7 @@ public class ReservationService implements BaseService<ReservationResource> {
     @Override
     public ReservationResource update(ReservationResource entity, Long T) {
         Reservation existingReservation = repository.findById(T)
-                .orElseThrow(() -> new RuntimeException("Could not find the reservation."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the reservation."));
         existingReservation.setConsumerId(entity.getConsumerId());
         existingReservation.setTableId(entity.getTableId());
         existingReservation.setDate(entity.getDate());
@@ -59,6 +60,6 @@ public class ReservationService implements BaseService<ReservationResource> {
     public ReservationResource get(Long T) {
         return repository.findById(T)
                 .map(reservationConverter::convertToEntityAttribute)
-                .orElseThrow(() -> new RuntimeException("Could not find the reservation."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the reservation."));
     }
 }

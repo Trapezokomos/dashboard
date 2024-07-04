@@ -1,16 +1,14 @@
 package net.trapezokomos.dashboard.resources;
-
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
-
 @EqualsAndHashCode
 @Getter
 @Setter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseResource {
     private Long id;
     private int version;
