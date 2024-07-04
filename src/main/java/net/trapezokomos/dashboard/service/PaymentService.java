@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.Payment;
 import net.trapezokomos.dashboard.exception.GenericException;
+import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.PaymentRepository;
 import net.trapezokomos.dashboard.resources.PaymentResource;
 import net.trapezokomos.dashboard.utils.PaymentConverter;
@@ -25,13 +26,13 @@ public class PaymentService implements BaseService<PaymentResource> {
     @Override
     public PaymentResource save(PaymentResource entity) throws GenericException {
         Payment payment = paymentConverter.convertToDatabaseColumn(entity);
-        return Optional.of(repository.save(payment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the payment."));
+        return Optional.of(repository.save(payment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the payment."));
     }
 
     @Override
     public void delete(Long T) {
         Payment existingPayment = repository.findById(T)
-                .orElseThrow(() -> new RuntimeException("Could not find the payment."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the payment."));
         repository.delete(existingPayment);
     }
 
@@ -43,18 +44,18 @@ public class PaymentService implements BaseService<PaymentResource> {
     @Override
     public PaymentResource update(PaymentResource entity, Long T) {
         Payment existingPayment = repository.findById(T)
-                .orElseThrow(() -> new RuntimeException("Could not find the payment."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the payment."));
         existingPayment.setAmount(entity.getAmount());
         existingPayment.setDate(entity.getDate());
         existingPayment.setStatus(entity.getStatus());
         existingPayment.setReservationConsumerId(entity.getReservationConsumerId());
-        return Optional.of(repository.save(existingPayment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the payment."));
+        return Optional.of(repository.save(existingPayment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the payment."));
     }
 
     @Override
     public PaymentResource get(Long T) {
         return repository.findById(T)
                 .map(paymentConverter::convertToEntityAttribute)
-                .orElseThrow(() -> new RuntimeException("Could not find the payment."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the payment."));
     }
 }

@@ -1,12 +1,9 @@
 package net.trapezokomos.dashboard.data;
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
@@ -17,11 +14,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class BillingDetails extends AbstractEntity {
-
     @Column(
-            name = "store_id",
+            name = "storeIid",
             nullable = false
     )
     private int store_id;
-
 }

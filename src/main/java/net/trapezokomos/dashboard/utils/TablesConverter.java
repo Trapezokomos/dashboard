@@ -1,6 +1,5 @@
 package net.trapezokomos.dashboard.utils;
 
-
 import jakarta.persistence.AttributeConverter;
 import net.trapezokomos.dashboard.data.Tables;
 import net.trapezokomos.dashboard.resources.TablesResource;

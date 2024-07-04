@@ -50,6 +50,4 @@ public class StoreDayHourConverter implements AttributeConverter<StoreDayHourRes
                 .updatedAt(updatedAt)
                 .build();
     }
-
-
 }

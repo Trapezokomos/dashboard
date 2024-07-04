@@ -50,6 +50,4 @@ public class StoreConverter implements AttributeConverter<StoreResource, Store> 
                 .updatedAt(updatedAt)
                 .build();
     }
-
-
 }

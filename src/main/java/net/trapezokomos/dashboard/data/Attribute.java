@@ -1,11 +1,9 @@
 package net.trapezokomos.dashboard.data;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
@@ -15,8 +13,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-
-public class Attribute  extends  AbstractEntity{
+public class Attribute  extends  AbstractEntity {
     @Column(
             name = "name",
             nullable = false
@@ -30,13 +27,8 @@ public class Attribute  extends  AbstractEntity{
     private String type;
 
     @Column(
-            name = "store_id",
+            name = "storeId",
             nullable = false
     )
     private int store_id;
-
-
-
-
-
 }

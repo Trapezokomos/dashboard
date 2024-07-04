@@ -1,6 +1,5 @@
 package net.trapezokomos.dashboard.controller;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.trapezokomos.dashboard.resources.StoreDayHourResource;
 import net.trapezokomos.dashboard.service.StoreDayHourService;
@@ -69,5 +68,4 @@ public class StoreDayHourController {
             return ResponseEntity.status(404).body(error.getMessage());
         }
     }
-
 }

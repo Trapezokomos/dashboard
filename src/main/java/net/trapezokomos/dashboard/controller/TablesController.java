@@ -1,6 +1,5 @@
 package net.trapezokomos.dashboard.controller;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.trapezokomos.dashboard.resources.TablesResource;
 import net.trapezokomos.dashboard.service.TablesService;
@@ -70,5 +69,4 @@ public class TablesController {
             return ResponseEntity.status(404).body(error.getMessage());
         }
     }
-
 }

@@ -1,15 +1,16 @@
 package net.trapezokomos.dashboard.service;
 
-
 import net.trapezokomos.dashboard.data.Store;
 import net.trapezokomos.dashboard.exception.GenericException;
+import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.StoreRepository;
 import net.trapezokomos.dashboard.resources.StoreResource;
 import net.trapezokomos.dashboard.utils.StoreConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -29,13 +30,13 @@ public class StoreService  implements BaseService<StoreResource> {
         if (repository.existsByName(store.getName())) {
             throw new GenericException();
         }
-        return Optional.of(repository.save(store)).map(storeConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the store."));
+        return Optional.of(repository.save(store)).map(storeConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the store."));
     }
 
     @Override
     public void delete(Long id) {
         Store existingStore = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the store."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the store."));
         repository.delete(existingStore);
     }
 
@@ -47,17 +48,16 @@ public class StoreService  implements BaseService<StoreResource> {
     public StoreResource get(Long id) {
         return repository.findById(id)
                 .map(storeConverter::convertToEntityAttribute)
-                .orElseThrow(() -> new RuntimeException("Could not find the store."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the store."));
     }
 
     @Override
     public StoreResource update(StoreResource entity, Long id) {
         Store existingStore = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the store."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the store."));
         existingStore.setName(entity.getName());
         existingStore.setAddress(entity.getAddress());
         existingStore.setUpdatedAt(new Date());
-        return Optional.of(repository.save(existingStore)).map(storeConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the store."));
+        return Optional.of(repository.save(existingStore)).map(storeConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the store."));
     }
-
 }

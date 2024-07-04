@@ -1,6 +1,5 @@
 package net.trapezokomos.dashboard.controller;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import net.trapezokomos.dashboard.resources.StoreResource;
@@ -72,14 +71,4 @@ public class StoreController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
-
-
-
-
-
-
-
-
-
-
 }

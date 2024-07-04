@@ -17,7 +17,7 @@ public class AttributesConverter implements AttributeConverter<AttributeResource
                 .id(attributeResource.getId())
                 .name(attributeResource.getName())
                 .type(attributeResource.getType())
-                .store_id(attributeResource.getStore_id())
+                .store_id(attributeResource.getStore_Id())
                 .createdAt(attributeResource.getCreatedAt())
                 .updatedAt(attributeResource.getUpdatedAt())
                 .build();
@@ -29,7 +29,7 @@ public class AttributesConverter implements AttributeConverter<AttributeResource
                 .id(attribute.getId())
                 .name(attribute.getName())
                 .type(attribute.getType())
-                .store_id(attribute.getStore_id())
+                .store_Id(attribute.getStore_id())
                 .createdAt(attribute.getCreatedAt())
                 .updatedAt(attribute.getUpdatedAt())
                 .build();
@@ -39,7 +39,7 @@ public class AttributesConverter implements AttributeConverter<AttributeResource
         return AttributeResource.builder()
                 .name(name)
                 .type(type)
-                .store_id(store_id)
+                .store_Id(store_id)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();

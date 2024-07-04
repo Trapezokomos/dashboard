@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BillingDetailsRepository extends JpaRepository<BillingDetails, Long>, JpaSpecificationExecutor<BillingDetails> {
-
 }

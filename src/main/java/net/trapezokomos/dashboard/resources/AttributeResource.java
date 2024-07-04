@@ -14,5 +14,5 @@ public class AttributeResource extends  BaseResource{
     private String name;
     private String description;
     private String type;
-    private int store_id;
+    private int store_Id;
 }

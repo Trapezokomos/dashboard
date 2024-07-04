@@ -34,7 +34,7 @@ public class DataInitializer implements CommandLineRunner {
     private final MenuService menuService;
     private final TablesService tablesService;
     private final StoreDayHourService storeDayHourService;
-    private final ImageService imageService;
+//    private final ImageService imageService;
     private final FeedbackService feedbackService;
 
     @Autowired private UserConverter userConverter;
@@ -49,7 +49,7 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired private MenuConverter menuConverter;
     @Autowired private TablesConverter tablesConverter;
     @Autowired private StoreDayHourConverter storeDayHourConverter;
-    @Autowired private ImageConverter imageConverter;
+//    @Autowired private ImageConverter imageConverter;
     @Autowired private FeedbackConverter feedbackConverter;
 
     public void run(String... args) {
@@ -65,7 +65,7 @@ public class DataInitializer implements CommandLineRunner {
         createMenuData();
         createTablesData();
         createStoreDayHourData();
-        createImageData();
+//        createImageData();
         createFeedbackData();
     }
 
@@ -274,23 +274,22 @@ public class DataInitializer implements CommandLineRunner {
         });
     }
 
-    private void createImageData() {
-        ArrayList<ImageResource> list = new ArrayList<>(
-                List.of(
-//                        imageConverter.createImageResource("Image1", "Image1 Description", 1  ,"http.test.gr",1, new Date(), new Date()),
-//                        imageConverter.createImageResource("Image2", "Image2 Description",  "http.test.gr",2, new Date(), new Date())
-                )
-        );
-        list.forEach(image -> {
-            try {
-                imageService.save(image);
-            } catch (GenericException e) {
-                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
-                e.printStackTrace();
-            }
-        });
-    }
-
+//    private void createImageData() {
+//        ArrayList<ImageResource> list = new ArrayList<>(
+//                List.of(
+////                        imageConverter.createImageResource("Image1", "Image1 Description", 1  ,"http.test.gr",1, new Date(), new Date()),
+////                        imageConverter.createImageResource("Image2", "Image2 Description",  "http.test.gr",2, new Date(), new Date())
+//                )
+//        );
+//        list.forEach(image -> {
+//            try {
+//                imageService.save(image);
+//            } catch (GenericException e) {
+//                // Handle the exception (e.g., log it, rethrow it as a runtime exception, etc.)
+//                e.printStackTrace();
+//            }
+//        });
+//    }
     private void createFeedbackData() {
         ArrayList<FeedbackResource> list = new ArrayList<>(
                 List.of(
@@ -307,6 +306,5 @@ public class DataInitializer implements CommandLineRunner {
             }
         });
     }
-
 
 }

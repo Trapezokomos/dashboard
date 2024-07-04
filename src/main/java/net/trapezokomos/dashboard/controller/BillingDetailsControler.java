@@ -1,6 +1,5 @@
 package net.trapezokomos.dashboard.controller;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.trapezokomos.dashboard.resources.BillingDetailsResource;
 import net.trapezokomos.dashboard.service.BillingDetailsService;
@@ -70,5 +69,4 @@ public class BillingDetailsControler {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
         }
     }
-
 }

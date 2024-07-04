@@ -1,9 +1,6 @@
 package net.trapezokomos.dashboard.resources;
-
-
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -16,7 +13,4 @@ public class StoreDayHourResource  extends BaseResource{
     private String start_time;
     private String end_time;
     private boolean cloded;
-
-
-
 }

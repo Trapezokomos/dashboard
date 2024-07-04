@@ -1,6 +1,5 @@
 package net.trapezokomos.dashboard.controller;
 
-
 import io.swagger.v3.oas.annotations.tags.Tag;
 import net.trapezokomos.dashboard.resources.FeedbackResource;
 import net.trapezokomos.dashboard.service.FeedbackService;

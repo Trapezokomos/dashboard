@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StoreDayHourRepository extends JpaRepository<StoreDayHour, Long>, JpaSpecificationExecutor<StoreDayHour> {
-
-
 }

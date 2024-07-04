@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.User;
 import net.trapezokomos.dashboard.exception.GenericException;
+import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.UserRepository;
 import net.trapezokomos.dashboard.resources.UserResource;
 import net.trapezokomos.dashboard.utils.UserConverter;
@@ -35,13 +36,13 @@ public class UserService implements BaseService<UserResource> {
         if (repository.existsByEmailOrPhoneNumber(user.getEmail(), user.getPhoneNumber())) {
             throw new GenericException();
         }
-        return Optional.of(repository.save(user)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the user."));
+        return Optional.of(repository.save(user)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the user."));
     }
 
     @Override
     public UserResource update(UserResource userResource, Long id) {
         User existingUser = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the user."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the user."));
         existingUser.setUsername(userResource.getUsername());
         existingUser.setEmail(userResource.getEmail());
         existingUser.setFirstName(userResource.getFirst_name());
@@ -50,20 +51,20 @@ public class UserService implements BaseService<UserResource> {
         existingUser.setCustomerId(userResource.getCustomerId());
         existingUser.setRoles(userResource.getRoles());
         existingUser.setUpdatedAt(new Date());
-        return Optional.of(repository.save(existingUser)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not update the user."));
+        return Optional.of(repository.save(existingUser)).map(userConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the user."));
     }
 
     @Override
     public void delete(Long id) {
         User existingUser = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the user."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the user."));
         repository.delete(existingUser);
     }
 
     public UserResource get(Long id) {
         return repository.findById(id)
                 .map(userConverter::convertToEntityAttribute)
-                .orElseThrow(() -> new RuntimeException("Could not find the user."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the user."));
     }
 
     public Page<UserResource> list(Pageable pageable, Specification<User> filter) {

@@ -1,11 +1,9 @@
 package net.trapezokomos.dashboard.utils;
 
-
 import jakarta.persistence.AttributeConverter;
 import net.trapezokomos.dashboard.data.Feedback;
 import net.trapezokomos.dashboard.resources.FeedbackResource;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 @Component
@@ -17,7 +15,7 @@ public class FeedbackConverter implements AttributeConverter<FeedbackResource, F
                 .user_id(feedbackResource.getUser_id())
                 .store_id(feedbackResource.getStore_id())
                 .rating(feedbackResource.getRating())
-                .comments(feedbackResource.getComments())
+                .comment(feedbackResource.getComments())
                 .createdAt(feedbackResource.getCreatedAt())
                 .updatedAt(feedbackResource.getUpdatedAt())
                 .build();
@@ -28,7 +26,7 @@ public class FeedbackConverter implements AttributeConverter<FeedbackResource, F
                 .user_id(feedback.getUser_id())
                 .store_id(feedback.getStore_id())
                 .rating(feedback.getRating())
-                .comments(feedback.getComments())
+                .comments(feedback.getComment())
                 .createdAt(feedback.getCreatedAt())
                 .updatedAt(feedback.getUpdatedAt())
                 .build();

@@ -3,6 +3,7 @@ package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.StoreDayHour;
 import net.trapezokomos.dashboard.exception.GenericException;
+import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.StoreDayHourRepository;
 import net.trapezokomos.dashboard.resources.StoreDayHourResource;
 import net.trapezokomos.dashboard.utils.StoreDayHourConverter;
@@ -25,13 +26,13 @@ public class StoreDayHourService implements BaseService<StoreDayHourResource> {
     @Override
     public StoreDayHourResource save(StoreDayHourResource entity) throws GenericException {
         StoreDayHour storeDayHour = storeDayHourConverter.convertToDatabaseColumn(entity);
-        return Optional.of(repository.save(storeDayHour)).map(storeDayHourConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the store day hour."));
+        return Optional.of(repository.save(storeDayHour)).map(storeDayHourConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the store day hour."));
     }
 
     @Override
     public void delete(Long id) {
         StoreDayHour existingStoreDayHour = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the store day hour."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the store day hour."));
         repository.delete(existingStoreDayHour);
     }
 
@@ -43,13 +44,13 @@ public class StoreDayHourService implements BaseService<StoreDayHourResource> {
     public StoreDayHourResource get(Long id) {
         return repository.findById(id)
                 .map(storeDayHourConverter::convertToEntityAttribute)
-                .orElseThrow(() -> new RuntimeException("Could not find the store day hour."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the store day hour."));
     }
 
     @Override
     public StoreDayHourResource update(StoreDayHourResource entity, Long id) {
         StoreDayHour existingStoreDayHour = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the store day hour."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the store day hour."));
         existingStoreDayHour.setStore_id(entity.getStore_id());
         existingStoreDayHour.setDayofweek(entity.getDayofweek());
         existingStoreDayHour.setStart_time(entity.getStart_time());
@@ -57,8 +58,4 @@ public class StoreDayHourService implements BaseService<StoreDayHourResource> {
         existingStoreDayHour.setCloded(entity.isCloded());
         return storeDayHourConverter.convertToEntityAttribute(repository.save(existingStoreDayHour));
     }
-
-
-
-
 }

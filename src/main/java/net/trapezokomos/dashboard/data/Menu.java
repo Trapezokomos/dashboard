@@ -26,5 +26,4 @@ public class Menu  extends AbstractEntity{
             nullable = false
     )
     private int store_id;
-
 }

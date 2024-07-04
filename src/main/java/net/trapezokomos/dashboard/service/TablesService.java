@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.service;
 
 import net.trapezokomos.dashboard.data.Tables;
 import net.trapezokomos.dashboard.exception.GenericException;
+import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.TablesRepository;
 import net.trapezokomos.dashboard.resources.TablesResource;
 import net.trapezokomos.dashboard.utils.TablesConverter;
@@ -27,13 +28,13 @@ public class TablesService implements BaseService<TablesResource> {
         if (repository.existsByName(tables.getName())) {
             throw new GenericException();
         }
-        return Optional.of(repository.save(tables)).map(tablesConverter::convertToEntityAttribute).orElseThrow(() -> new RuntimeException("Could not create the tables."));
+        return Optional.of(repository.save(tables)).map(tablesConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the tables."));
     }
 
     @Override
     public void delete(Long id) {
         Tables existingTables = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the tables."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the tables."));
         repository.delete(existingTables);
     }
 
@@ -45,15 +46,14 @@ public class TablesService implements BaseService<TablesResource> {
     public TablesResource get(Long id) {
         return repository.findById(id)
                 .map(tablesConverter::convertToEntityAttribute)
-                .orElseThrow(() -> new RuntimeException("Could not find the tables."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the tables."));
     }
 
     @Override
     public TablesResource update(TablesResource entity, Long id) {
         Tables existingTables = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Could not find the tables."));
+                .orElseThrow(() -> new GenericRunTimeException("Could not find the tables."));
         existingTables.setName(entity.getName());
         return tablesConverter.convertToEntityAttribute(repository.save(existingTables));
     }
-
 }

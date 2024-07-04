@@ -1,6 +1,5 @@
 package net.trapezokomos.dashboard.data;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -45,5 +44,4 @@ public class Store  extends  AbstractEntity{
             nullable = false
     )
     private int customer_id;
-
 }
