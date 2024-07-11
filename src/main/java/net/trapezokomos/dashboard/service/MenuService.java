@@ -1,25 +1,24 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.Menu;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.MenuRepository;
 import net.trapezokomos.dashboard.resources.MenuResource;
 import net.trapezokomos.dashboard.utils.MenuConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MenuService implements BaseService<MenuResource> {
-    private final MenuRepository repository;
-    @Autowired private MenuConverter menuConverter;
 
-    public MenuService(MenuRepository repository) {
-        this.repository = repository;
-    }
+    private final MenuRepository repository;
+    private final MenuConverter menuConverter;
 
     @Override
     public MenuResource save(MenuResource entity) throws GenericException {

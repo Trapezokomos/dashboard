@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.ImageRepository;
 import net.trapezokomos.dashboard.resources.ImageResource;
 import net.trapezokomos.dashboard.utils.ImageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class ImageService implements BaseService<ImageResource> {
 
     private final ImageRepository repository;
-    @Autowired
-    private ImageConverter imageConverter;
+    private final ImageConverter imageConverter;
 
     @Override
     public ImageResource save(ImageResource entity) throws GenericException {

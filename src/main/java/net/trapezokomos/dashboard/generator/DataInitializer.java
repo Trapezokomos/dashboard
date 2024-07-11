@@ -67,7 +67,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        createUsersData();
+        registerUsersData();
         createCustomersData();
         createConsumersData();
         createReservationTransactionsData();
@@ -82,7 +82,7 @@ public class DataInitializer implements CommandLineRunner {
         createFeedbackData();
     }
 
-    private void createUsersData() {
+    private void registerUsersData() {
         List<UserResource> list = new ArrayList<>(
                 List.of(
                         userConverter.createUserResource("admin@gmail.com", "Admin first name", "Admin last name", "2310456456", 0, Role.ADMIN, passwordEncoder.encode("password")),

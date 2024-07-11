@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.StoreRepository;
 import net.trapezokomos.dashboard.resources.StoreResource;
 import net.trapezokomos.dashboard.utils.StoreConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class StoreService implements BaseService<StoreResource> {
 
     private final StoreRepository repository;
-    @Autowired
-    private StoreConverter storeConverter;
+    private final StoreConverter storeConverter;
 
     @Override
     public StoreResource save(StoreResource entity) throws GenericException {

@@ -24,7 +24,6 @@ import java.util.List;
 @Getter
 @Setter
 @SuperBuilder
-@ToString
 public class User extends AbstractEntity implements UserDetails {
     @Column(
             name = "password",

@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.PaymentRepository;
 import net.trapezokomos.dashboard.resources.PaymentResource;
 import net.trapezokomos.dashboard.utils.PaymentConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class PaymentService implements BaseService<PaymentResource> {
 
     private final PaymentRepository repository;
-    @Autowired
-    private PaymentConverter paymentConverter;
+    private final PaymentConverter paymentConverter;
 
     @Override
     public PaymentResource save(PaymentResource entity) throws GenericException {

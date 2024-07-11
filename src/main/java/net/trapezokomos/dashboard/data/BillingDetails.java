@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "billing_details")
 @AllArgsConstructor

@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.resources.TablesResource;
 import net.trapezokomos.dashboard.service.TablesService;
 import org.springframework.data.domain.Page;
@@ -19,53 +20,37 @@ public class TablesController {
 
     @GetMapping("/all")
     public ResponseEntity<Page<TablesResource>> getTables(
-            @RequestParam(value = "pageNumber", required = true, defaultValue = "0") Integer pageNumber,
-            @RequestParam(value = "pageSize", required = true, defaultValue = "10") Integer pageSize
+            @RequestParam(value = "pageNumber") Integer pageNumber,
+            @RequestParam(value = "pageSize") Integer pageSize
     ) {
         return ResponseEntity.ok(tablesService.list(PageRequest.of(pageNumber, pageSize)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getTable(
-            @RequestParam(value = "id", required = true) Long id
+    public ResponseEntity<TablesResource> getTable(
+            @PathVariable(value = "id") Long id
     ) {
-        try {
-            return ResponseEntity.ok(tablesService.get(id));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        return ResponseEntity.ok(tablesService.get(id));
     }
 
     @PostMapping
-    public ResponseEntity updateTable(
-            @RequestParam(value = "id", required = true) Long id,
+    public ResponseEntity<TablesResource> updateTable(
+            @PathVariable(value = "id") Long id,
             @RequestBody TablesResource tablesResource
     ) {
-        try {
-            return ResponseEntity.ok(tablesService.update(tablesResource, id));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        return ResponseEntity.ok(tablesService.update(tablesResource, id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity createTable(@RequestBody TablesResource tablesResource) {
-        try {
-            return ResponseEntity.ok(tablesService.save(tablesResource));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+    public ResponseEntity<TablesResource> createTable(@RequestBody TablesResource tablesResource) throws GenericException {
+        return ResponseEntity.ok(tablesService.save(tablesResource));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteTable(
-            @RequestParam(value = "id", required = true) Long id
+    public ResponseEntity<Void> deleteTable(
+            @PathVariable(value = "id") Long id
     ) {
-        try {
-            tablesService.delete(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        tablesService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

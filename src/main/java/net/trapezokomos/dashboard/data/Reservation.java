@@ -11,7 +11,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "reservations")
 @AllArgsConstructor

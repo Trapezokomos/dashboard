@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.TablesRepository;
 import net.trapezokomos.dashboard.resources.TablesResource;
 import net.trapezokomos.dashboard.utils.TablesConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class TablesService implements BaseService<TablesResource> {
 
     private final TablesRepository repository;
-    @Autowired
-    private TablesConverter tablesConverter;
+    private final TablesConverter tablesConverter;
 
     @Override
     public TablesResource save(TablesResource entity) throws GenericException {

@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.ConsumerRepository;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import net.trapezokomos.dashboard.utils.ConsumerConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class ConsumerService implements BaseService<ConsumerResource> {
 
     private final ConsumerRepository repository;
-    @Autowired
-    private ConsumerConverter consumerConverter;
+    private final ConsumerConverter consumerConverter;
 
     @Override
     public ConsumerResource save(ConsumerResource entity) throws GenericException {

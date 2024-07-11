@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.ReservationRepository;
 import net.trapezokomos.dashboard.resources.ReservationResource;
 import net.trapezokomos.dashboard.utils.ReservationConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import java.util.Optional;
 public class ReservationService implements BaseService<ReservationResource> {
 
     private final ReservationRepository repository;
-    @Autowired private ReservationConverter reservationConverter;
+    private final ReservationConverter reservationConverter;
 
     @Override
     public ReservationResource save(ReservationResource entity) throws GenericException {

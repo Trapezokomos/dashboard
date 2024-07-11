@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.BillingDetailsRepository;
 import net.trapezokomos.dashboard.resources.BillingDetailsResource;
 import net.trapezokomos.dashboard.utils.BillingDetailsConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class BillingDetailsService implements BaseService<BillingDetailsResource> {
 
     private final BillingDetailsRepository repository;
-    @Autowired
-    private BillingDetailsConverter billingDetailsConverter;
+    private final BillingDetailsConverter billingDetailsConverter;
 
     @Override
     public BillingDetailsResource save(BillingDetailsResource entity) throws GenericException {

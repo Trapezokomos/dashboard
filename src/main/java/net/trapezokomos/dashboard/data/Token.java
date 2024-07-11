@@ -13,7 +13,6 @@ import org.hibernate.annotations.OnDeleteAction;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @SuperBuilder
 public class Token extends AbstractEntity {
   @Column(

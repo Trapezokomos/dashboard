@@ -7,7 +7,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.FeedbackRepository;
 import net.trapezokomos.dashboard.resources.FeedbackResource;
 import net.trapezokomos.dashboard.utils.FeedbackConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.Optional;
 public class FeedbackService implements BaseService<FeedbackResource> {
 
     private final FeedbackRepository repository;
-    @Autowired
-    private FeedbackConverter feedbackConverter;
+    private final FeedbackConverter feedbackConverter;
 
     @Override
     public FeedbackResource save(FeedbackResource entity) throws GenericException {

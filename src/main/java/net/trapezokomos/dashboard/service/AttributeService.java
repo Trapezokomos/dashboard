@@ -7,10 +7,10 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.AttributeRepository;
 import net.trapezokomos.dashboard.resources.AttributeResource;
 import net.trapezokomos.dashboard.utils.AttributesConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class AttributeService implements BaseService<AttributeResource> {
 
     private final AttributeRepository repository;
-    @Autowired private AttributesConverter attributesConverter;
+    private final AttributesConverter attributesConverter;
 
     @Override
     public AttributeResource save(AttributeResource entity) throws GenericException {
@@ -30,7 +30,6 @@ public class AttributeService implements BaseService<AttributeResource> {
         attribute.setCreatedAt(new Date());
         attribute.setUpdatedAt(new Date());
         return Optional.of(repository.save(attribute)).map(attributesConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the attribute."));
-
     }
 
     @Override

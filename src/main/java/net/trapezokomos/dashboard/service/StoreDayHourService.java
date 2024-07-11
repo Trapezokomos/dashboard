@@ -8,7 +8,6 @@ import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.StoreDayHourRepository;
 import net.trapezokomos.dashboard.resources.StoreDayHourResource;
 import net.trapezokomos.dashboard.utils.StoreDayHourConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ import java.util.Optional;
 public class StoreDayHourService implements BaseService<StoreDayHourResource> {
 
     private final StoreDayHourRepository repository;
-    @Autowired private StoreDayHourConverter storeDayHourConverter;
+    private final StoreDayHourConverter storeDayHourConverter;
 
     @Override
     public StoreDayHourResource save(StoreDayHourResource entity) throws GenericException {

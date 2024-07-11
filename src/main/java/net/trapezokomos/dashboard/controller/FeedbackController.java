@@ -2,6 +2,7 @@ package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.resources.FeedbackResource;
 import net.trapezokomos.dashboard.service.FeedbackService;
 import org.springframework.data.domain.Page;
@@ -19,47 +20,37 @@ public class FeedbackController {
 
     @GetMapping("/all")
     public ResponseEntity<Page<FeedbackResource>> getFeedback(
-            @RequestParam(value = "pageNumber", required = true, defaultValue = "0") Integer pageNumber,
-            @RequestParam(value = "pageSize", required = true, defaultValue = "10") Integer pageSize
+            @RequestParam(value = "pageNumber") Integer pageNumber,
+            @RequestParam(value = "pageSize") Integer pageSize
     ) {
         return ResponseEntity.ok(feedbackService.list(PageRequest.of(pageNumber, pageSize)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getFeedback(
-            @RequestParam(value = "id", required = true) Long id
+    public ResponseEntity<FeedbackResource> getFeedback(
+            @PathVariable(value = "id") Long id
     ) {
-        try {
-            return ResponseEntity.ok(feedbackService.get(id));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        return ResponseEntity.ok(feedbackService.get(id));
     }
 
     @PostMapping
-    public ResponseEntity createFeedback(@RequestBody FeedbackResource feedbackResource) {
-        try {
-            return ResponseEntity.ok(feedbackService.save(feedbackResource));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+    public ResponseEntity<FeedbackResource> createFeedback(@RequestBody FeedbackResource feedbackResource) throws GenericException {
+        return ResponseEntity.ok(feedbackService.save(feedbackResource));
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity updateFeedback(
-            @RequestParam(value = "id", required = true) Long id,
+    public ResponseEntity<FeedbackResource> updateFeedback(
+            @PathVariable(value = "id") Long id,
             @RequestBody FeedbackResource feedbackResource
     ) {
-        try {
-            return ResponseEntity.ok(feedbackService.update(feedbackResource, id));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        return ResponseEntity.ok(feedbackService.update(feedbackResource, id));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteFeedback(
-            @RequestParam(value = "id", required = true) Long id
+    public ResponseEntity<FeedbackResource> deleteFeedback(
+            @PathVariable(value = "id") Long id
     ) {
         feedbackService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }
