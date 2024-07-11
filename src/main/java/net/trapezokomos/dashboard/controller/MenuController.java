@@ -1,6 +1,8 @@
 package net.trapezokomos.dashboard.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.resources.MenuResource;
 import net.trapezokomos.dashboard.service.MenuService;
 import org.springframework.data.domain.Page;
@@ -11,62 +13,44 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/menu")
 @Tag(name = "Menu", description = "Basic operations for menus.")
+@RequiredArgsConstructor
 public class MenuController {
-    private final MenuService menuService;
 
-    public MenuController(MenuService menuService) {
-        this.menuService = menuService;
-    }
+    private final MenuService menuService;
 
     @GetMapping("/all")
     public ResponseEntity<Page<MenuResource>> getMenus(
-            @RequestParam(value = "pageNumber", required = true, defaultValue = "0") Integer pageNumber,
-            @RequestParam(value = "pageSize", required = true, defaultValue = "10") Integer pageSize
+            @RequestParam(value = "pageNumber") Integer pageNumber,
+            @RequestParam(value = "pageSize") Integer pageSize
     ) {
         return ResponseEntity.ok(menuService.list(PageRequest.of(pageNumber, pageSize)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getMenu(
-            @RequestParam(value = "id", required = true) Long id
+    public ResponseEntity<MenuResource> getMenu(
+            @PathVariable(value = "id") Long id
     ) {
-        try {
-            return ResponseEntity.ok(menuService.get(id));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        return ResponseEntity.ok(menuService.get(id));
     }
 
     @PostMapping
-    public ResponseEntity updateMenu(
-            @RequestParam(value = "id", required = true) Long id,
+    public ResponseEntity<MenuResource> updateMenu(
+            @PathVariable(value = "id") Long id,
             @RequestBody MenuResource menuResource
     ) {
-        try {
-            return ResponseEntity.ok(menuService.update(menuResource, id));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        return ResponseEntity.ok(menuService.update(menuResource, id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity createMenu(@RequestBody MenuResource menuResource) {
-        try {
-            return ResponseEntity.ok(menuService.save(menuResource));
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+    public ResponseEntity<MenuResource> createMenu(@RequestBody MenuResource menuResource) throws GenericException {
+        return ResponseEntity.ok(menuService.save(menuResource));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteMenu(
-            @RequestParam(value = "id", required = true) Long id
+    public ResponseEntity<Void> deleteMenu(
+            @PathVariable(value = "id") Long id
     ) {
-        try {
-            menuService.delete(id);
-            return ResponseEntity.ok().build();
-        } catch (Exception error) {
-            return ResponseEntity.status(404).body(error.getMessage());
-        }
+        menuService.delete(id);
+        return ResponseEntity.ok().build();
     }
 }

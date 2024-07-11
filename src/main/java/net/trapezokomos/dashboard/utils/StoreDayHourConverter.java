@@ -1,25 +1,24 @@
 package net.trapezokomos.dashboard.utils;
 
-
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.StoreDayHour;
 import net.trapezokomos.dashboard.resources.StoreDayHourResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class StoreDayHourConverter implements AttributeConverter<StoreDayHourResource, StoreDayHour> {
     @Override
 
     public StoreDayHour convertToDatabaseColumn(StoreDayHourResource storeDayHourResource) {
         return StoreDayHour.builder()
                 .id(storeDayHourResource.getId())
-                .store_id(storeDayHourResource.getStore_id())
-                .dayofweek(storeDayHourResource.getDayofweek())
-                .start_time(storeDayHourResource.getStart_time())
-                .end_time(storeDayHourResource.getEnd_time())
-                .cloded(storeDayHourResource.isCloded())
+                .storeId(storeDayHourResource.getStoreId())
+                .dayOfWeek(storeDayHourResource.getDayOfWeek())
+                .startTime(storeDayHourResource.getStartTime())
+                .endTime(storeDayHourResource.getEndTime())
+                .isClosed(storeDayHourResource.isClosed())
                 .createdAt(storeDayHourResource.getCreatedAt())
                 .updatedAt(storeDayHourResource.getUpdatedAt())
                 .build();
@@ -29,25 +28,23 @@ public class StoreDayHourConverter implements AttributeConverter<StoreDayHourRes
     public StoreDayHourResource convertToEntityAttribute(StoreDayHour storeDayHour) {
         return StoreDayHourResource.builder()
                 .id(storeDayHour.getId())
-                .store_id(storeDayHour.getStore_id())
-                .dayofweek(storeDayHour.getDayofweek())
-                .start_time(storeDayHour.getStart_time())
-                .end_time(storeDayHour.getEnd_time())
-                .cloded(storeDayHour.isCloded())
+                .storeId(storeDayHour.getStoreId())
+                .dayOfWeek(storeDayHour.getDayOfWeek())
+                .startTime(storeDayHour.getStartTime())
+                .endTime(storeDayHour.getEndTime())
+                .isClosed(storeDayHour.isClosed())
                 .createdAt(storeDayHour.getCreatedAt())
                 .updatedAt(storeDayHour.getUpdatedAt())
                 .build();
     }
 
-    public StoreDayHourResource createStoreDayHourResource(int store_id, int dayofweek, String start_time, String end_time, boolean cloded, Date createdAt, Date updatedAt) {
+    public StoreDayHourResource createStoreDayHourResource(int storeId, int dayOfWeek, String startTime, String endTime, boolean isClosed) {
         return StoreDayHourResource.builder()
-                .store_id(store_id)
-                .dayofweek(dayofweek)
-                .start_time(start_time)
-                .end_time(end_time)
-                .cloded(cloded)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .storeId(storeId)
+                .dayOfWeek(dayOfWeek)
+                .startTime(startTime)
+                .endTime(endTime)
+                .isClosed(isClosed)
                 .build();
     }
 }

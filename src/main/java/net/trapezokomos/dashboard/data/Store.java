@@ -9,13 +9,12 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "stores")
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Store  extends  AbstractEntity{
+public class Store extends AbstractEntity {
     @Column(
             name = "name",
             nullable = false
@@ -34,14 +33,14 @@ public class Store  extends  AbstractEntity{
     private String description;
 
     @Column(
-            name = "slottimeavailable",
+            name = "slot_time_available",
             nullable = false
     )
-    private String slottimeavailable;
+    private String slotTimeAvailable;
 
     @Column(
             name = "customer_id",
             nullable = false
     )
-    private int customer_id;
+    private int customerId;
 }

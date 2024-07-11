@@ -1,12 +1,12 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.Customer;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.CustomerRepository;
 import net.trapezokomos.dashboard.resources.CustomerResource;
 import net.trapezokomos.dashboard.utils.CustomerConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,15 +15,11 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService implements BaseService<CustomerResource> {
 
     private final CustomerRepository repository;
-    @Autowired private CustomerConverter customerConverter;
-
-    public CustomerService(CustomerRepository repository) {
-        this.repository = repository;
-    }
-
+    private final CustomerConverter customerConverter;
 
     @Override
     public CustomerResource save(CustomerResource entity) throws GenericException {
@@ -31,6 +27,8 @@ public class CustomerService implements BaseService<CustomerResource> {
         if (repository.existsByName(customer.getName())) {
             throw new GenericException();
         }
+        customer.setCreatedAt(new Date());
+        customer.setUpdatedAt(new Date());
         return Optional.of(repository.save(customer)).map(customerConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the customer."));
     }
 

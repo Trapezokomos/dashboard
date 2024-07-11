@@ -1,12 +1,12 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.Consumer;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.ConsumerRepository;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import net.trapezokomos.dashboard.utils.ConsumerConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,11 @@ import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ConsumerService implements BaseService<ConsumerResource> {
 
     private final ConsumerRepository repository;
-    @Autowired private ConsumerConverter consumerConverter;
-
-    public ConsumerService(ConsumerRepository repository) {
-        this.repository = repository;
-    }
+    private final ConsumerConverter consumerConverter;
 
     @Override
     public ConsumerResource save(ConsumerResource entity) throws GenericException {
@@ -30,6 +27,8 @@ public class ConsumerService implements BaseService<ConsumerResource> {
         if (repository.existsByEmail(consumer.getEmail())) {
             throw new GenericException();
         }
+        consumer.setCreatedAt(new Date());
+        consumer.setUpdatedAt(new Date());
         return Optional.of(repository.save(consumer)).map(consumerConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the consumer."));
     }
 

@@ -1,16 +1,15 @@
 package net.trapezokomos.dashboard.data;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import java.util.Date;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "feedback")
 @AllArgsConstructor
@@ -21,12 +20,12 @@ public class Feedback extends AbstractEntity {
            name = "user_id",
            nullable = false
     )
-    private int user_id;
+    private int userId;
     @Column(
             name = "store_id",
             nullable = false
     )
-    private int store_id;
+    private int storeId;
     @Column(
             name = "rating",
             nullable = false

@@ -10,13 +10,12 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(
         name = "consumers",
         uniqueConstraints = {
                 @UniqueConstraint(name = "consumer_email_unique", columnNames = "email"),
-                @UniqueConstraint(name = "consumer_phone_unique", columnNames = "phoneNumber"),
+                @UniqueConstraint(name = "consumer_phone_unique", columnNames = "phone_number"),
         })
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,17 +32,17 @@ public class Consumer extends AbstractEntity {
     )
     private String password;
     @Column(
-            name = "firstName",
+            name = "first_name",
             nullable = false
     )
     private String firstName;
     @Column(
-            name = "lastName",
+            name = "last_name",
             nullable = false
     )
     private String lastName;
     @Column(
-            name = "phoneNumber",
+            name = "phone_number",
             nullable = false
     )
     private String phoneNumber;

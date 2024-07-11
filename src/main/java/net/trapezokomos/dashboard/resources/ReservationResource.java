@@ -5,11 +5,11 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ReservationResource extends BaseResource {
     private Long consumerId;

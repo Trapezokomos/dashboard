@@ -1,13 +1,13 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Menu;
 import net.trapezokomos.dashboard.resources.MenuResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class MenuConverter implements AttributeConverter<MenuResource, Menu> {
 
     @Override
@@ -15,7 +15,7 @@ public class MenuConverter implements AttributeConverter<MenuResource, Menu> {
         return Menu.builder()
                 .id(menuResource.getId())
                 .name(menuResource.getName())
-                .store_id(menuResource.getStore_id())
+                .storeId(menuResource.getStoreId())
                 .createdAt(menuResource.getCreatedAt())
                 .updatedAt(menuResource.getUpdatedAt())
                 .build();
@@ -26,18 +26,16 @@ public class MenuConverter implements AttributeConverter<MenuResource, Menu> {
         return MenuResource.builder()
                 .id(menu.getId())
                 .name(menu.getName())
-                .store_id(menu.getStore_id())
+                .storeId(menu.getStoreId())
                 .createdAt(menu.getCreatedAt())
                 .updatedAt(menu.getUpdatedAt())
                 .build();
     }
 
-    public MenuResource createMenuResource(String name, int store_id, Date createdAt, Date updatedAt) {
+    public MenuResource createMenuResource(String name, int storeId) {
         return MenuResource.builder()
                 .name(name)
-                .store_id(store_id)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .storeId(storeId)
                 .build();
     }
 }

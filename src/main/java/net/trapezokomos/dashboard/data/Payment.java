@@ -11,7 +11,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "payment")
 @AllArgsConstructor
@@ -24,6 +23,6 @@ public class Payment extends AbstractEntity {
     private Date date;
     @Column(name = "status", nullable = false)
     private String status;
-    @Column(name = "reservationconsumerid", nullable = false)
+    @Column(name = "reservation_consumer_id", nullable = false)
     private Long reservationConsumerId;
 }

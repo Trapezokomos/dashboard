@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "customers")
 @AllArgsConstructor
@@ -22,7 +21,7 @@ public class Customer extends AbstractEntity {
     )
     private String name;
     @Column(
-            name = "phoneNumber",
+            name = "phone_number",
             nullable = false
     )
     private String phoneNumber;

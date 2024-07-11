@@ -54,12 +54,21 @@ Use Gradle to build the application:
 
 ### Step 4: Build and run Docker containers
 
-Build and start the Docker containers using Docker Compose:
+Before that you need to create a **.env** file with the following content:
+
+```plaintext
+POSTGRES_DB_USER=postgres_username
+POSTGRES_DB_PASSWORD=postgres_password
+POSTGRES_DB_NAME=postgres
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/postgres
+```
+
+Just run the **startDocker.sh** script to build and run the Docker containers:
 
 ```sh
-docker build -t dashboard-app-image .
-docker-compose up --build
+./startDocker.sh
 ```
+
 ## Development
 
 ### Swagger

@@ -4,11 +4,11 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class CustomerResource extends BaseResource {
     private String name;

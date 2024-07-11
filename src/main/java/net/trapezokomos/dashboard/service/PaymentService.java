@@ -1,31 +1,31 @@
 package net.trapezokomos.dashboard.service;
 
+import lombok.RequiredArgsConstructor;
 import net.trapezokomos.dashboard.data.Payment;
 import net.trapezokomos.dashboard.exception.GenericException;
 import net.trapezokomos.dashboard.exception.GenericRunTimeException;
 import net.trapezokomos.dashboard.repository.PaymentRepository;
 import net.trapezokomos.dashboard.resources.PaymentResource;
 import net.trapezokomos.dashboard.utils.PaymentConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentService implements BaseService<PaymentResource> {
 
     private final PaymentRepository repository;
-    @Autowired private PaymentConverter paymentConverter;
-
-    public PaymentService(PaymentRepository repository) {
-        this.repository = repository;
-    }
+    private final PaymentConverter paymentConverter;
 
     @Override
     public PaymentResource save(PaymentResource entity) throws GenericException {
         Payment payment = paymentConverter.convertToDatabaseColumn(entity);
+        payment.setCreatedAt(new Date());
+        payment.setUpdatedAt(new Date());
         return Optional.of(repository.save(payment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not create the payment."));
     }
 
@@ -38,7 +38,7 @@ public class PaymentService implements BaseService<PaymentResource> {
 
     @Override
     public Page<PaymentResource> list(Pageable pageable) {
-       return repository.findAll(pageable).map(paymentConverter::convertToEntityAttribute);
+        return repository.findAll(pageable).map(paymentConverter::convertToEntityAttribute);
     }
 
     @Override
@@ -49,6 +49,7 @@ public class PaymentService implements BaseService<PaymentResource> {
         existingPayment.setDate(entity.getDate());
         existingPayment.setStatus(entity.getStatus());
         existingPayment.setReservationConsumerId(entity.getReservationConsumerId());
+        existingPayment.setUpdatedAt(new Date());
         return Optional.of(repository.save(existingPayment)).map(paymentConverter::convertToEntityAttribute).orElseThrow(() -> new GenericRunTimeException("Could not update the payment."));
     }
 

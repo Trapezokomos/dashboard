@@ -1,6 +1,7 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Payment;
 import net.trapezokomos.dashboard.resources.PaymentResource;
 import org.springframework.stereotype.Component;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
+@Converter
 public class PaymentConverter implements AttributeConverter<PaymentResource, Payment> {
 
     @Override
@@ -20,6 +22,7 @@ public class PaymentConverter implements AttributeConverter<PaymentResource, Pay
                 .reservationConsumerId(paymentResource.getReservationConsumerId())
                 .createdAt(paymentResource.getCreatedAt())
                 .updatedAt(paymentResource.getUpdatedAt())
+                .version(paymentResource.getVersion())
                 .build();
     }
 
@@ -33,17 +36,16 @@ public class PaymentConverter implements AttributeConverter<PaymentResource, Pay
                 .reservationConsumerId(payment.getReservationConsumerId())
                 .createdAt(payment.getCreatedAt())
                 .updatedAt(payment.getUpdatedAt())
+                .version(payment.getVersion())
                 .build();
     }
 
-    public PaymentResource createPaymentResource(Double amount, Date date, String status, Long reservationConsumerId, Date createdAt, Date updatedAt) {
+    public PaymentResource createPaymentResource(Double amount, Date date, String status, Long reservationConsumerId) {
         return PaymentResource.builder()
                 .amount(amount)
                 .date(date)
                 .status(status)
                 .reservationConsumerId(reservationConsumerId)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
                 .build();
     }
 }

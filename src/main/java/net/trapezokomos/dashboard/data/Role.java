@@ -1,17 +1,43 @@
 package net.trapezokomos.dashboard.data;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
 public enum Role {
-    ADMIN("Admin"),
-    CUSTOMER_ADMIN("CustomerAdmin"),
-    CUSTOMER_EMPLOYEE("CustomerEmployee");
+    ADMIN(Set.of(
+            Permission.ADMIN_READ,
+            Permission.ADMIN_UPDATE,
+            Permission.ADMIN_CREATE,
+            Permission.ADMIN_DELETE
+    )),
+    CUSTOMER_ADMIN(Set.of(
+            Permission.CUSTOMER_READ,
+            Permission.CUSTOMER_UPDATE,
+            Permission.CUSTOMER_CREATE,
+            Permission.CUSTOMER_DELETE
+    )),
+    CUSTOMER_EMPLOYEE(Set.of(
+            Permission.CUSTOMER_READ,
+            Permission.CUSTOMER_UPDATE,
+            Permission.CUSTOMER_CREATE,
+            Permission.CUSTOMER_DELETE
+    ));
 
-    private final String role;
+    @Getter
+    private final Set<Permission> permissions;
 
-    Role(String role) {
-        this.role = role;
-    }
-
-    public String getRole() {
-        return role;
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> authorities = getPermissions()
+                .stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toList());
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
+        return authorities;
     }
 }

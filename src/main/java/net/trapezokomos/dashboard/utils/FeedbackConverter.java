@@ -1,45 +1,50 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Feedback;
 import net.trapezokomos.dashboard.resources.FeedbackResource;
 import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
 @Component
+@Converter
 public class FeedbackConverter implements AttributeConverter<FeedbackResource, Feedback> {
 
     @Override
     public Feedback convertToDatabaseColumn(FeedbackResource feedbackResource) {
         return Feedback.builder()
-                .user_id(feedbackResource.getUser_id())
-                .store_id(feedbackResource.getStore_id())
+                .userId(feedbackResource.getUserId())
+                .storeId(feedbackResource.getStoreId())
                 .rating(feedbackResource.getRating())
-                .comment(feedbackResource.getComments())
+                .comment(feedbackResource.getComment())
+                .date(feedbackResource.getDate())
                 .createdAt(feedbackResource.getCreatedAt())
                 .updatedAt(feedbackResource.getUpdatedAt())
                 .build();
     }
+
     @Override
     public FeedbackResource convertToEntityAttribute(Feedback feedback) {
         return FeedbackResource.builder()
-                .user_id(feedback.getUser_id())
-                .store_id(feedback.getStore_id())
+                .userId(feedback.getUserId())
+                .storeId(feedback.getStoreId())
                 .rating(feedback.getRating())
-                .comments(feedback.getComment())
+                .comment(feedback.getComment())
+                .date(feedback.getDate())
                 .createdAt(feedback.getCreatedAt())
                 .updatedAt(feedback.getUpdatedAt())
                 .build();
     }
 
-    public FeedbackResource createFeedbackResource(int user_id, int store_id, int rating, String comments, Date createdAt, Date updatedAt) {
+    public FeedbackResource createFeedbackResource(int user_id, int store_id, int rating, String comment, Date date) {
         return FeedbackResource.builder()
-                .user_id(user_id)
-                .store_id(store_id)
+                .userId(user_id)
+                .storeId(store_id)
                 .rating(rating)
-                .comments(comments)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .comment(comment)
+                .date(date)
                 .build();
     }
 }

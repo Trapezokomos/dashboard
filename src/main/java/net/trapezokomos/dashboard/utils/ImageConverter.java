@@ -1,13 +1,13 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Image;
 import net.trapezokomos.dashboard.resources.ImageResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class ImageConverter implements AttributeConverter<ImageResource, Image> {
 
     @Override
@@ -17,8 +17,8 @@ public class ImageConverter implements AttributeConverter<ImageResource, Image> 
                 .name(imageResource.getName())
                 .type(imageResource.getType())
                 .picByte(imageResource.getByte())
-                .srclink(imageResource.getSrclink())
-                .store_id(imageResource.getStore_id())
+                .srcLink(imageResource.getSrcLink())
+                .storeId(imageResource.getStoreId())
                 .createdAt(imageResource.getCreatedAt())
                 .updatedAt(imageResource.getUpdatedAt())
                 .build();
@@ -31,22 +31,20 @@ public class ImageConverter implements AttributeConverter<ImageResource, Image> 
                 .name(image.getName())
                 .type(image.getType())
                 .Byte(image.getPicByte())
-                .srclink(image.getSrclink())
-                .store_id(image.getStore_id())
+                .srcLink(image.getSrcLink())
+                .storeId(image.getStoreId())
                 .createdAt(image.getCreatedAt())
                 .updatedAt(image.getUpdatedAt())
                 .build();
     }
 
-    public ImageResource createImageResource(String name, String type, byte[] Byte, String srclink, int store_id, Date createdAt, Date updatedAt) {
+    public ImageResource createImageResource(String name, String type, byte[] Byte, String srcLink, int storeId) {
         return ImageResource.builder()
                 .name(name)
                 .type(type)
                 .Byte(Byte)
-                .srclink(srclink)
-                .store_id(store_id)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .srcLink(srcLink)
+                .storeId(storeId)
                 .build();
     }
 }

@@ -1,30 +1,30 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Role;
 import net.trapezokomos.dashboard.data.User;
 import net.trapezokomos.dashboard.resources.UserResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.Set;
-
 @Component
+@Converter
 public class UserConverter implements AttributeConverter<UserResource, User> {
 
     @Override
     public User convertToDatabaseColumn(UserResource userResource) {
         return User.builder()
-                .id(userResource.getId())
-                .customerId(userResource.getCustomerId())
+                .firstName(userResource.getFirstName())
+                .lastName(userResource.getLastName())
                 .email(userResource.getEmail())
-                .firstName(userResource.getFirst_name())
-                .lastName(userResource.getLast_name())
-                .phoneNumber(userResource.getPhone_number())
-                .roles(userResource.getRoles())
-                .username(userResource.getUsername())
+                .phoneNumber(userResource.getPhoneNumber())
+                .role(userResource.getRole())
+                .customerId(userResource.getCustomerId())
+                .password(userResource.getPassword())
+                .id(userResource.getId())
                 .createdAt(userResource.getCreatedAt())
                 .updatedAt(userResource.getUpdatedAt())
+                .version(userResource.getVersion())
                 .build();
     }
 
@@ -34,27 +34,26 @@ public class UserConverter implements AttributeConverter<UserResource, User> {
                 .id(user.getId())
                 .customerId(user.getCustomerId())
                 .email(user.getEmail())
-                .first_name(user.getFirstName())
-                .last_name(user.getLastName())
-                .phone_number(user.getPhoneNumber())
-                .roles(user.getRoles())
-                .username(user.getUsername())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phoneNumber(user.getPhoneNumber())
+                .password(user.getPassword())
+                .role(user.getRole())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
+                .version(user.getVersion())
                 .build();
     }
 
-    public UserResource createUserResource(String username, String email, String first_name, String last_name, String phone_number, int customerId, Set<Role> roles, Date createdAt, Date updatedAt) {
+    public UserResource createUserResource(String email, String first_name, String last_name, String phone_number, int customerId, Role role, String password) {
         return UserResource.builder()
                 .customerId(customerId)
+                .password(password)
                 .email(email)
-                .first_name(first_name)
-                .last_name(last_name)
-                .phone_number(phone_number)
-                .roles(roles)
-                .username(username)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .firstName(first_name)
+                .lastName(last_name)
+                .phoneNumber(phone_number)
+                .role(role)
                 .build();
     }
 }

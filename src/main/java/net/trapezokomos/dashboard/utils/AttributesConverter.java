@@ -1,15 +1,14 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Attribute;
 import net.trapezokomos.dashboard.resources.AttributeResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class AttributesConverter implements AttributeConverter<AttributeResource, Attribute> {
-
 
     @Override
     public Attribute convertToDatabaseColumn(AttributeResource attributeResource) {
@@ -17,7 +16,8 @@ public class AttributesConverter implements AttributeConverter<AttributeResource
                 .id(attributeResource.getId())
                 .name(attributeResource.getName())
                 .type(attributeResource.getType())
-                .store_id(attributeResource.getStore_Id())
+                .value(attributeResource.getValue())
+                .storeId(attributeResource.getStoreId())
                 .createdAt(attributeResource.getCreatedAt())
                 .updatedAt(attributeResource.getUpdatedAt())
                 .build();
@@ -29,19 +29,19 @@ public class AttributesConverter implements AttributeConverter<AttributeResource
                 .id(attribute.getId())
                 .name(attribute.getName())
                 .type(attribute.getType())
-                .store_Id(attribute.getStore_id())
+                .value(attribute.getValue())
+                .storeId(attribute.getStoreId())
                 .createdAt(attribute.getCreatedAt())
                 .updatedAt(attribute.getUpdatedAt())
                 .build();
     }
 
-    public AttributeResource createAttributeResource(String name, String type, int store_id, Date createdAt, Date updatedAt) {
+    public AttributeResource createAttributeResource(String name, String type, int store_id, String value) {
         return AttributeResource.builder()
                 .name(name)
                 .type(type)
-                .store_Id(store_id)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
+                .storeId(store_id)
+                .value(value)
                 .build();
     }
 

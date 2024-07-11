@@ -4,12 +4,12 @@ package net.trapezokomos.dashboard.resources;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class BillingDetailsResource  extends BaseResource{
-    private int store_id;
+public class BillingDetailsResource extends BaseResource {
+    private int storeId;
 }

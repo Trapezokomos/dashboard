@@ -9,21 +9,20 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "menu")
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Menu  extends AbstractEntity{
+public class Menu extends AbstractEntity {
     @Column(
             name = "name",
             nullable = false
     )
     private String name;
     @Column(
-            name = "Store_id",
+            name = "store_id",
             nullable = false
     )
-    private int store_id;
+    private int storeId;
 }

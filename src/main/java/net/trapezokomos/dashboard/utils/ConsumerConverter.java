@@ -1,13 +1,13 @@
 package net.trapezokomos.dashboard.utils;
 
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 import net.trapezokomos.dashboard.data.Consumer;
 import net.trapezokomos.dashboard.resources.ConsumerResource;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Component
+@Converter
 public class ConsumerConverter implements AttributeConverter<ConsumerResource, Consumer> {
 
     @Override
@@ -22,6 +22,7 @@ public class ConsumerConverter implements AttributeConverter<ConsumerResource, C
                 .password(consumerResource.getPassword())
                 .createdAt(consumerResource.getCreatedAt())
                 .updatedAt(consumerResource.getUpdatedAt())
+                .version(consumerResource.getVersion())
                 .build();
     }
 
@@ -37,10 +38,11 @@ public class ConsumerConverter implements AttributeConverter<ConsumerResource, C
                 .password(consumer.getPassword())
                 .createdAt(consumer.getCreatedAt())
                 .updatedAt(consumer.getUpdatedAt())
+                .version(consumer.getVersion())
                 .build();
     }
 
-    public ConsumerResource createConsumerResource(String username, String password, String firstName, String lastName, String phoneNumber, String email, Date createdAt, Date updatedAt) {
+    public ConsumerResource createConsumerResource(String username, String password, String firstName, String lastName, String phoneNumber, String email) {
         return ConsumerResource.builder()
                 .email(email)
                 .firstName(firstName)
@@ -48,8 +50,6 @@ public class ConsumerConverter implements AttributeConverter<ConsumerResource, C
                 .phoneNumber(phoneNumber)
                 .username(username)
                 .password(password)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
                 .build();
     }
 }
